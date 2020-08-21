@@ -1,4 +1,4 @@
-
+{
   "compileOnSave": true,
   "compilerOptions": {
     "target": "es2017",
@@ -20,7 +20,11 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "inlineSourceMap": true,
-    "importHelpers": true
+    "importHelpers": true,
+    "paths": {
+      "config/*": ["config/*"]
+    },
+    "baseUrl": "."
   },
-  "exclude": ["app/public", "app/views", "node_modules*"]
+  "exclude": ["app/public", "app/views", "node_modules*", "database"]
 }

@@ -1,1 +1,3 @@
-module.exports = (options) => async (ctx, next) => {};
+module.exports = (options) => async (ctx, next) => {
+  await next();
+};

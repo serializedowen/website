@@ -12,6 +12,6 @@ module.exports = (app: Application, model: IModel) => {
     updated_at: DATE,
   });
 
-  model.sync();
+  // model.sync();
   return UserLoginRecord;
 };

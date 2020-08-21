@@ -2,10 +2,12 @@
 // Do not modify this file!!!!!!!!!
 
 import 'egg';
+import ExportErrorHandler from '../../../app/middleware/errorHandler';
 import ExportInjectUserdata from '../../../app/middleware/injectUserdata';
 
 declare module 'egg' {
   interface IMiddleware {
+    errorHandler: typeof ExportErrorHandler;
     injectUserdata: typeof ExportInjectUserdata;
   }
 }

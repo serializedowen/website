@@ -16,6 +16,6 @@ module.exports = (app: Application, model: IModel) => {
     },
   });
 
-  model.sync();
+  // model.sync();
   return UserSecurityQuestion;
 };

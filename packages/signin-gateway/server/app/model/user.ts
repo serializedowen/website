@@ -1,7 +1,16 @@
 import { Application, IModel } from "egg";
 
 module.exports = (app: Application, model: IModel) => {
-  const { STRING, INTEGER, DATE, ENUM, BLOB, TEXT, BOOLEAN } = app.Sequelize;
+  const {
+    STRING,
+    INTEGER,
+    DATE,
+    ENUM,
+    BLOB,
+    TEXT,
+    BOOLEAN,
+    CHAR,
+  } = app.Sequelize;
 
   const User = app.model.define("user", {
     id: { type: INTEGER, primaryKey: true, autoIncrement: true },
@@ -10,14 +19,15 @@ module.exports = (app: Application, model: IModel) => {
     phone: INTEGER,
     password: { type: STRING(200), allowNull: false },
     age: INTEGER,
+    salt: { type: CHAR(12), allowNull: false },
     created_at: DATE,
     updated_at: DATE,
     avatar_blob: BLOB,
     avatar_url: TEXT,
     privilege: { type: ENUM("normal", "admin"), defaultValue: "normal" },
-    isActive: BOOLEAN,
+    is_active: { type: BOOLEAN, defaultValue: true },
   });
 
-  model.sync();
+  // model.sync();
   return User;
 };
