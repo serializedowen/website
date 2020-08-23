@@ -20,12 +20,12 @@ module.exports = (app: Application, model: IModel) => {
     password: { type: STRING(200), allowNull: false },
     age: INTEGER,
     salt: { type: CHAR(12), allowNull: false },
-    created_at: DATE,
-    updated_at: DATE,
-    avatar_blob: BLOB,
-    avatar_url: TEXT,
+    createdAt: DATE,
+    updatedAt: DATE,
+    avatarBlob: BLOB,
+    avatarUrl: TEXT,
     privilege: { type: ENUM("normal", "admin"), defaultValue: "normal" },
-    is_active: { type: BOOLEAN, defaultValue: true },
+    isActive: { type: BOOLEAN, defaultValue: true },
   });
 
   // model.sync();

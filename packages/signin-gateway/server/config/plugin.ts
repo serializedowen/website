@@ -11,6 +11,20 @@ const plugin: EggPlugin = {
     enable: true,
     package: "egg-passport",
   },
+  passportGithub: {
+    enable: true,
+    package: "egg-passport-github",
+  },
+
+  passportGoogle: {
+    enable: true,
+    package: "egg-passport-google",
+  },
+
+  passportLocal: {
+    enable: true,
+    package: "egg-passport-local",
+  },
 
   sequelize: {
     enable: true,

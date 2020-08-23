@@ -26,13 +26,22 @@ export default class Auth extends Service {
     };
   }
 
-  @Inject("aaa")
-  public async createUser(aaa?: Service) {
-    const { salt, password } = this.saltPassword("waerrar");
+  /**
+   *
+   */
+  public recordLogin(userId: string) {}
+
+  public async createProviderMetadata(record: thirdPartyUserRecordDAO) {
+    return this.app.model.ThirdPartyUserRecords.create(record);
+  }
+
+  public async createUser(userData: Partial<userDAO>) {
+    const { salt, password } = this.saltPassword(userData.password as string);
 
     return await this.app.model.User.create({
-      name: "aaaaa" + Math.random(),
+      name: userData.name,
       email: "rea" + Math.random() + ".com",
+      avatarUrl: userData.avatarUrl,
       password,
       salt,
     });
