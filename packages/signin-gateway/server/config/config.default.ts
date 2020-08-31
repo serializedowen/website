@@ -2,8 +2,6 @@ import { EggAppConfig, EggAppInfo, PowerPartial } from "egg";
 import sqlConfig from "./sql.config";
 import "reflect-metadata";
 import "tsconfig-paths/register";
-import { app } from "egg-mock/bootstrap";
-import { configLoader } from "tsconfig-paths/lib/config-loader";
 
 export default (appInfo: EggAppInfo) => {
   const config = {} as PowerPartial<EggAppConfig>;

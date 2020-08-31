@@ -1,4 +1,5 @@
 import { Application } from "egg";
+import { EggShell } from "egg-shell-decorators";
 
 export default (app: Application) => {
   app.model.sync();
@@ -27,10 +28,5 @@ export default (app: Application) => {
     loginURL: "/auth/local",
   });
 
-  router.get("/auth", controller.auth.signup);
-  router.post("/auth", controller.auth.signup);
-  router.get(
-    "/auth/verify-third-party-user",
-    controller.auth.wireProviderCredential
-  );
+  EggShell(app, { prefix: "/", quickStart: true });
 };

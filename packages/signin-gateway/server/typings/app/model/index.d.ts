@@ -6,6 +6,7 @@ import ExportThirdPartyUserRecords from '../../../app/model/third_party_user_rec
 import ExportUser from '../../../app/model/user';
 import ExportUserLoginRecord from '../../../app/model/user_login_record';
 import ExportUserSecurityQuestion from '../../../app/model/user_security_question';
+import ExportDtoUserDTO from '../../../app/model/dto/UserDTO';
 
 declare module 'egg' {
   interface IModel {
@@ -13,5 +14,8 @@ declare module 'egg' {
     User: ReturnType<typeof ExportUser>;
     UserLoginRecord: ReturnType<typeof ExportUserLoginRecord>;
     UserSecurityQuestion: ReturnType<typeof ExportUserSecurityQuestion>;
+    Dto: {
+      UserDTO: ReturnType<typeof ExportDtoUserDTO>;
+    }
   }
 }

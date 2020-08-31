@@ -12,7 +12,7 @@ module.exports = (app: Application, model: IModel) => {
     CHAR,
   } = app.Sequelize;
 
-  const User = app.model.define("user", {
+  const User = model.define("user", {
     id: { type: INTEGER, primaryKey: true, autoIncrement: true },
     name: { type: STRING(30), unique: true, allowNull: false },
     email: { type: STRING(100), allowNull: false },
