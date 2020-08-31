@@ -1,0 +1,3 @@
+[submodule "egg-shell-decorators"]
+	path = egg-shell-decorators
+	url = git@github.com:serializedowen/egg-shell-decorators.git
