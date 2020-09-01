@@ -23,7 +23,7 @@
     "importHelpers": true,
     "paths": {
       "config/*": ["config/*"],
-      "egg-shell-decorators": ["../egg-shell-decorators"]
+      "egg-shell-decorators": ["../egg-shell-decorators/lib"]
     },
     "baseUrl": "."
   },

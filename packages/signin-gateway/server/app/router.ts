@@ -1,5 +1,5 @@
 import { Application } from "egg";
-import { EggShell } from "egg-shell-decorators";
+import { EggShell } from "egg-shell-decorators-plus";
 
 export default (app: Application) => {
   app.model.sync();
@@ -28,5 +28,5 @@ export default (app: Application) => {
     loginURL: "/auth/local",
   });
 
-  EggShell(app, { prefix: "/", quickStart: true });
+  EggShell(app);
 };

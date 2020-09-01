@@ -1,5 +1,12 @@
 import { Controller } from "egg";
-import { Prefix, Get, Post, Body, Query, Header } from "egg-shell-decorators";
+import {
+  Prefix,
+  Get,
+  Post,
+  Body,
+  Query,
+  Header,
+} from "egg-shell-decorators-plus";
 import { UserDTO } from "app/model/dto/UserDTO";
 @Prefix("/auth")
 export default class AuthController extends Controller {
