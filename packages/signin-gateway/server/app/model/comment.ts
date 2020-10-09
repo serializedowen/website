@@ -1,18 +1,32 @@
 import { Application, IModel } from "egg";
 
 module.exports = (app: Application, model: IModel) => {
-  const { INTEGER, DATE } = app.Sequelize;
-
-  const UserLoginRecord = app.model.define("user_login_record", {
+  const {
+    STRING,
+    INTEGER,
+    DATE,
+    ENUM,
+    BLOB,
+    TEXT,
+    BOOLEAN,
+    CHAR,
+  } = app.Sequelize;
+  const Comment = model.define("comment", {
     userId: {
       type: INTEGER,
       references: { model: "users", key: "id" },
       onDelete: "CASCADE",
     },
+    content: {
+      type: TEXT,
+    },
+    identifier: {
+      type: STRING,
+    },
+
     createdAt: DATE,
     updatedAt: DATE,
   });
 
-  // model.sync();
-  return UserLoginRecord;
+  return Comment;
 };

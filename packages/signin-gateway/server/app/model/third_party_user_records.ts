@@ -7,11 +7,12 @@ module.exports = (app: Application, model: IModel) => {
     userId: {
       type: INTEGER,
       references: { model: "users", key: "id" },
+      onDelete: "CASCADE",
     },
     provider: STRING,
     providerId: STRING,
     createdAt: DATE,
-    updated: DATE,
+    updatedAt: DATE,
   });
 
   // model.sync();

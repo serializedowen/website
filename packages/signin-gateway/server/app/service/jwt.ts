@@ -7,7 +7,6 @@ export default class JWTService extends Service {
   public encode(data: Record<string, any>) {
     let user;
 
-    //check if data is sequelize model
     if (data.dataValues) user = data.dataValues;
     else user = data;
 

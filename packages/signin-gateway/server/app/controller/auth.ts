@@ -10,7 +10,6 @@ import {
 import { UserDTO } from "app/model/dto/UserDTO";
 @Prefix("/auth")
 export default class AuthController extends Controller {
-  @Reflect.metadata("aaa", "bbb")
   @Get("/aa")
   public async index(
     @Body aaa: UserDTO,
@@ -45,16 +44,31 @@ export default class AuthController extends Controller {
         params.name = thirdPartyData.name;
         params.password = "123456";
 
-        const user = await this.service.auth.createUser(params);
+        const record = await this.service.auth.findLinkedLocalAccountId(
+          thirdPartyData.id,
+          thirdPartyData.provider
+        );
 
-        await this.service.auth.createProviderMetadata({
-          provider: thirdPartyData.provider,
-          providerId: thirdPartyData.id,
-          userId: user.id,
-        });
+        if (record) {
+          const user = await this.service.auth.findUserByPK(record.userId);
+          this.ctx.user.userObject = user;
+        } else {
+          const user = await this.service.auth.createUser(params);
 
-        return this.service.jwt.encode(user);
+          await this.service.auth.createProviderMetadata({
+            provider: thirdPartyData.provider,
+            providerId: thirdPartyData.id,
+            userId: user.id,
+          });
+
+          this.ctx.user.userObject = user;
+        }
+
+        return;
       }
+
+      default:
+        return;
     }
   }
   // public async login(username, password) {

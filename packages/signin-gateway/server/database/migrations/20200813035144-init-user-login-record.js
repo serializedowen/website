@@ -15,6 +15,7 @@ module.exports = {
       user_id: {
         type: INTEGER,
         references: { model: "users", key: "id" },
+        onDelete: "CASCADE",
       },
       created_at: DATE,
       updated_at: DATE,

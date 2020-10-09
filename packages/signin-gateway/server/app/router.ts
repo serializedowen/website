@@ -2,6 +2,11 @@ import { Application } from "egg";
 import { EggShell } from "egg-shell-decorators-plus";
 
 export default (app: Application) => {
+  app.model.Comment.belongsTo(app.model.User, {
+    as: "comment",
+    foreignKey: "user_id",
+  });
+
   app.model.sync();
   const { controller, router } = app;
   router.get("/", controller.home.index);

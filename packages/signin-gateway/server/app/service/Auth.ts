@@ -4,18 +4,8 @@ import crypto = require("crypto");
 const secret =
   "4pzKckZH6JT4mQPXULEnL4AoRt4knDIvgRNfBkHjzxiRgtzFynaEB3NMFcd8jX/4izCde6SpBnxSn23UZL5tFA==";
 
-function Inject(sss) {
-  return (target, key, index) => {
-    console.log(Reflect.getMetadata("design:type", target, key));
-    console.log(Reflect.getMetadata("design:paramtypes", target, key));
-    console.log(Reflect.getMetadata("design:returntype", target, key));
-    return target;
-  };
-}
-
 export default class Auth extends Service {
   private saltPassword(password: string) {
-    console.log(Reflect.getMetadata("design:type", Auth));
     const salt = crypto.randomBytes(8).toString("base64");
     return {
       salt,
@@ -33,6 +23,16 @@ export default class Auth extends Service {
 
   public async createProviderMetadata(record: thirdPartyUserRecordDAO) {
     return this.app.model.ThirdPartyUserRecords.create(record);
+  }
+
+  public async findLinkedLocalAccountId(providerId: string, provider: string) {
+    return this.app.model.ThirdPartyUserRecords.findOne({
+      where: { provider, providerId },
+    });
+  }
+
+  public async findUserByPK(id: string) {
+    return await this.app.model.User.findByPk(id);
   }
 
   public async createUser(userData: Partial<userDAO>) {
