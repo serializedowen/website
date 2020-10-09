@@ -49,7 +49,7 @@ const EggShell = (app) => {
         try {
           ctx.body = ctx.request ? ctx.request.body : null;
 
-          const params = Reflect.getMetadata(PARAM_INFO, instance, pName);
+          const params = Reflect.getMetadata(PARAM_INFO, instance, pName) || [];
 
           return await instance[pName].apply(
             instance,
