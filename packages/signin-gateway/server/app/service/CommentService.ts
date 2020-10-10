@@ -11,4 +11,8 @@ export default class CommentService extends Service {
 
     this.ctx.user?.userModel.save();
   }
+
+  public async getComments(identifier: string) {
+    return await this.ctx.model.Comment.findAll({ where: { identifier } });
+  }
 }

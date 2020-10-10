@@ -7,11 +7,17 @@ import { commentDTO } from "app/model/dto/commentDTO";
 @Prefix("/comments")
 export default class CommentsController extends Controller {
   @Authenticated()
-  @Get("/:identifier/add")
+  @Post("/:identifier/add")
   public async addComment(
     @Body data: commentDTO,
     @Param("identifier") identifier: string
   ) {
     await this.service.commentService.addComment({ ...data, identifier });
+  }
+
+  @Get("/:identifier")
+  public async getComments(@Param("identifier") identifier: string) {
+    this.ctx.body = await this.service.commentService.getComments(identifier);
+    this.ctx.status = 200;
   }
 }
