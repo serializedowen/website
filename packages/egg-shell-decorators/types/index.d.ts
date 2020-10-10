@@ -15,7 +15,7 @@ interface CoupleDecorator {
 }
 
 export const EggShell: EggShell;
-export const StatusError: StatusError;
+export const StatusError: any;
 
 export const Get: SingleDecorator;
 export const Post: SingleDecorator;
@@ -25,16 +25,10 @@ export const Patch: SingleDecorator;
 export const Options: SingleDecorator;
 export const Head: SingleDecorator;
 
-export const Get: SingleDecorator;
-export const Post: SingleDecorator;
-export const Put: SingleDecorator;
-export const Delete: SingleDecorator;
-export const Patch: SingleDecorator;
-export const Options: SingleDecorator;
-export const Head: SingleDecorator;
 export const Prefix: Function;
 export const Middleware: Function;
 
 export const Body: ParameterDecorator;
 export const Query: (key: String) => ParameterDecorator;
 export const Header: (key: String) => ParameterDecorator;
+export const Param: (key: String) => ParameterDecorator;

@@ -5,7 +5,13 @@ const { filter } = require("lodash");
 const ControllerHandler = require("./handler/controller-handler");
 const MethodHandler = require("./handler/method-handler");
 
-const { PARAM_INFO, BODY, QUERY, HEADER } = require("./decorators/symbols");
+const {
+  PARAM_INFO,
+  BODY,
+  QUERY,
+  HEADER,
+  PARAM,
+} = require("./decorators/symbols");
 
 const ctMap = new Map();
 const ctHandler = new ControllerHandler();
@@ -47,15 +53,27 @@ const EggShell = (app) => {
       const routerCb = async (ctx) => {
         const instance = new c.constructor(ctx);
         try {
-          ctx.body = ctx.request ? ctx.request.body : null;
+          // ctx.body = ctx.request ? ctx.request.body : null;
+
+          ctx.status === 404 && (ctx.status = 200);
 
           const params = Reflect.getMetadata(PARAM_INFO, instance, pName) || [];
+          const preprocessor = Reflect.getMetadata(
+            "preProcessor",
+            instance[pName]
+          );
+
+          if (preprocessor) {
+            preprocessor.call(instance);
+          }
 
           return await instance[pName].apply(
             instance,
             params.map((param) => {
               if (!param) return undefined;
               switch (param.extract) {
+                case PARAM:
+                  return ctx.params[param.key] || undefined;
                 case BODY:
                   const containerClass = plainToClass(
                     param.typeInfo,
@@ -93,6 +111,7 @@ module.exports = {
   Body: require("./decorators/Body"),
   Query: require("./decorators/Query"),
   Header: require("./decorators/Header"),
+  Param: require("./decorators/Param"),
 
   Get: methodHandler.get(),
   Post: methodHandler.post(),
