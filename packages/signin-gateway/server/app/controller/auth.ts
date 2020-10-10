@@ -8,6 +8,8 @@ import {
   Header,
 } from "egg-shell-decorators-plus";
 import { UserDTO } from "app/model/dto/UserDTO";
+import activeUserCache from "app/activeUserCache";
+import Authenticated from "app/decorators/Authenticated";
 @Prefix("/auth")
 export default class AuthController extends Controller {
   @Get("/aa")
@@ -30,6 +32,7 @@ export default class AuthController extends Controller {
     this.ctx.body = this.service.jwt.encode(user);
   }
 
+  @Authenticated()
   @Get("/verify-third-party-user")
   public async wireProviderCredential() {
     if (!this.ctx.user) return;
@@ -51,9 +54,11 @@ export default class AuthController extends Controller {
 
         if (record) {
           const user = await this.service.auth.findUserByPK(record.userId);
-          this.ctx.user.userObject = user;
+          activeUserCache.set(user.id, user);
+          this.ctx.user.userId = user.id;
         } else {
           const user = await this.service.auth.createUser(params);
+          activeUserCache.set(user.id, user);
 
           await this.service.auth.createProviderMetadata({
             provider: thirdPartyData.provider,
@@ -61,7 +66,7 @@ export default class AuthController extends Controller {
             userId: user.id,
           });
 
-          this.ctx.user.userObject = user;
+          this.ctx.user.userId = user.id;
         }
 
         return;

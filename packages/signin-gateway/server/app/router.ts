@@ -7,7 +7,9 @@ export default (app: Application) => {
     foreignKey: "user_id",
   });
 
-  app.model.sync();
+  app.model.User.hasMany(app.model.Comment);
+
+  app.model.sync().then(() => console.log("db synced"));
   const { controller, router } = app;
   router.get("/", controller.home.index);
 

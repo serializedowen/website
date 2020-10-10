@@ -23,6 +23,8 @@
   },
   "dependencies": {
     "@types/egg": "^1.5.0",
+    "@types/lru-cache": "^5.1.0",
+    "@types/uuid": "^8.3.0",
     "class-validator": "^0.12.2",
     "egg": "^2.6.1",
     "egg-passport": "^2.1.1",
@@ -31,13 +33,15 @@
     "egg-passport-local": "^1.2.1",
     "egg-scripts": "^2.6.0",
     "egg-sequelize": "^5.2.2",
-    "egg-shell-decorators-plus": "^0.1.0",
     "jsonwebtoken": "^8.5.1",
+    "lru-cache": "^6.0.0",
     "mysql2": "^2.1.0",
+    "egg-shell-decorators-plus": "^0.2.0",
     "passport-github": "^1.1.0",
     "reflect-metadata": "^0.1.13",
     "sequelize-cli": "^6.2.0",
-    "tsconfig-paths": "^3.9.0"
+    "tsconfig-paths": "^3.9.0",
+    "uuid": "^8.3.1"
   },
   "devDependencies": {
     "@types/mocha": "^2.2.40",

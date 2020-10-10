@@ -1,9 +1,14 @@
+import { commentDTO } from "app/model/dto/commentDTO";
 import { Service } from "egg";
 
 export default class CommentService extends Service {
-  public async addComment(comment) {
-    const user = this.ctx.user.userObject;
+  public async addComment(data: commentDTO & { identifier: string }) {
+    //@ts-ignore
+    await this.ctx.user?.userModel.createComment({
+      content: data.content,
+      identifier: data.identifier,
+    });
 
-    console.log(user);
+    this.ctx.user?.userModel.save();
   }
 }

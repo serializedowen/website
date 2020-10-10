@@ -1,0 +1,110 @@
+Arguments: 
+  /usr/local/bin/node /usr/local/bin/yarn
+
+PATH: 
+  /Library/Frameworks/Python.framework/Versions/3.8/bin:/Users/owenwang/.cargo/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/ffmpeg/bin:/Library/Apple/usr/bin:/Library/Frameworks/Python.framework/Versions/3.8/bin:/Users/owenwang/.cargo/bin:/usr/local/apache-maven-3.6.3/bin:/usr/local/apache-maven-3.6.3/bin
+
+Yarn version: 
+  1.22.4
+
+Node version: 
+  12.13.0
+
+Platform: 
+  darwin x64
+
+Trace: 
+  Error: write EPIPE
+      at WriteWrap.onWriteComplete [as oncomplete] (internal/stream_base_commons.js:87:16)
+      at TLSWrap.writeLatin1String (<anonymous>)
+      at handleWriteReq (internal/stream_base_commons.js:53:21)
+      at writeGeneric (internal/stream_base_commons.js:139:15)
+      at TLSSocket.Socket._writeGeneric (net.js:770:11)
+      at TLSSocket.Socket._write (net.js:782:8)
+      at doWrite (_stream_writable.js:431:12)
+      at clearBuffer (_stream_writable.js:551:7)
+      at TLSSocket.Writable.uncork (_stream_writable.js:325:7)
+      at ClientRequest._flushOutput (_http_outgoing.js:808:10)
+
+npm manifest: 
+  {
+    "name": "sign-in-egg-server",
+    "version": "1.0.0",
+    "description": "",
+    "private": true,
+    "egg": {
+      "typescript": true,
+      "declarations": true
+    },
+    "scripts": {
+      "start": "egg-scripts start --daemon --title=egg-server-sign-in-egg-server",
+      "stop": "egg-scripts stop --title=egg-server-sign-in-egg-server",
+      "dev": "egg-bin dev",
+      "debug": "egg-bin debug",
+      "test-local": "egg-bin test",
+      "test": "npm run lint -- --fix && npm run test-local",
+      "cov": "egg-bin cov",
+      "tsc": "ets && tsc -p tsconfig.json",
+      "ci": "npm run lint && npm run cov && npm run tsc",
+      "autod": "autod",
+      "lint": "eslint . --ext .ts",
+      "clean": "ets clean"
+    },
+    "dependencies": {
+      "@types/egg": "^1.5.0",
+      "@types/lru-cache": "^5.1.0",
+      "@types/uuid": "^8.3.0",
+      "class-validator": "^0.12.2",
+      "egg": "^2.6.1",
+      "egg-passport": "^2.1.1",
+      "egg-passport-github": "^1.0.0",
+      "egg-passport-google": "^1.0.1",
+      "egg-passport-local": "^1.2.1",
+      "egg-scripts": "^2.6.0",
+      "egg-sequelize": "^5.2.2",
+      "jsonwebtoken": "^8.5.1",
+      "lru-cache": "^6.0.0",
+      "mysql2": "^2.1.0",
+      "egg-shell-decorators-plus": "file:../egg-shell-decorators",
+      "passport-github": "^1.1.0",
+      "reflect-metadata": "^0.1.13",
+      "sequelize-cli": "^6.2.0",
+      "tsconfig-paths": "^3.9.0",
+      "uuid": "^8.3.1"
+    },
+    "devDependencies": {
+      "@types/mocha": "^2.2.40",
+      "@types/node": "^7.0.12",
+      "@types/supertest": "^2.0.0",
+      "autod": "^3.0.1",
+      "autod-egg": "^1.1.0",
+      "egg-bin": "^4.15.0",
+      "egg-ci": "^1.8.0",
+      "egg-mock": "^3.16.0",
+      "eslint": "^6.7.2",
+      "eslint-config-egg": "^8.0.0",
+      "tslib": "^1.9.0",
+      "typescript": "^3.0.0"
+    },
+    "engines": {
+      "node": ">=8.9.0"
+    },
+    "ci": {
+      "version": "8"
+    },
+    "repository": {
+      "type": "git",
+      "url": ""
+    },
+    "eslintIgnore": [
+      "coverage"
+    ],
+    "author": "",
+    "license": "MIT"
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

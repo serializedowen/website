@@ -22,8 +22,7 @@
     "inlineSourceMap": true,
     "importHelpers": true,
     "paths": {
-      "config/*": ["config/*"],
-      "egg-shell-decorators-plus": ["../egg-shell-decorators/lib"]
+      "config/*": ["config/*"]
     },
     "baseUrl": "."
   },
