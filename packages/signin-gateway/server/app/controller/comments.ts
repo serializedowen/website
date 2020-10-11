@@ -3,7 +3,7 @@ import { Prefix, Get, Post, Body, Param } from "egg-shell-decorators-plus";
 
 import Authenticated from "app/decorators/Authenticated";
 import { commentDTO } from "app/model/dto/commentDTO";
-import OpenAPI from "app/decorators/OpenAPi";
+import OpenAPI from "app/decorators/OpenAPI";
 
 @Prefix("/comments")
 export default class CommentsController extends Controller {
