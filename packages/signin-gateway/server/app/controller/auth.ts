@@ -26,12 +26,16 @@ export default class AuthController extends Controller {
     ctx.body = await ctx.service.test.sayHi("egg");
   }
 
+  @Get("/check")
+  public async check() {
+    if (this.ctx.user && this.ctx.user.userModel) this.ctx.status = 200;
+    else this.ctx.status = 401;
+  }
 
-
-  @Get('/decodeToken')
+  @Get("/decodeToken")
   @Authenticated()
   public decodeToken() {
-    this.ctx.body = this.ctx.user
+    this.ctx.body = this.ctx.user;
   }
 
   @Post("/signup")
@@ -47,8 +51,7 @@ export default class AuthController extends Controller {
 
     const thirdPartyData = this.ctx.user;
 
-    this.ctx.status = 200
-
+    this.ctx.status = 204;
 
     switch (thirdPartyData.provider) {
       case "github": {

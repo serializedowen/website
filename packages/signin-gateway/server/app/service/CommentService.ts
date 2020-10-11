@@ -13,6 +13,9 @@ export default class CommentService extends Service {
   }
 
   public async getComments(identifier: string) {
-    return await this.ctx.model.Comment.findAll({ where: { identifier } });
+    return await this.ctx.model.Comment.scope("includeUserData").findAll({
+      where: { identifier },
+      order: [["createdAt", "DESC"]],
+    });
   }
 }
