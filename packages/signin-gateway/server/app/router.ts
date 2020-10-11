@@ -13,6 +13,8 @@ export default (app: Application) => {
   const { controller, router } = app;
   router.get("/", controller.home.index);
 
+
+  router.redirect('/redirect', '/', 302)
   // Authentication routes
   // const github = app.passport.authenticate("github");
   // app.get("/auth/github", github);
