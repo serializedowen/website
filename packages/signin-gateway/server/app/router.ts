@@ -2,19 +2,22 @@ import { Application } from "egg";
 import { EggShell } from "egg-shell-decorators-plus";
 
 export default (app: Application) => {
-  app.model.Comment.belongsTo(app.model.User, {
-    as: "comment",
-    foreignKey: "user_id",
-  });
-
+  app.model.Comment.belongsTo(app.model.User);
   app.model.User.hasMany(app.model.Comment);
+
+  app.model.Comment.addScope("includeUserData", {
+    include: [
+      {
+        model: app.model.User,
+      },
+    ],
+  });
 
   app.model.sync().then(() => console.log("db synced"));
   const { controller, router } = app;
   router.get("/", controller.home.index);
 
-
-  router.redirect('/redirect', '/', 302)
+  router.redirect("/redirect", "/", 302);
   // Authentication routes
   // const github = app.passport.authenticate("github");
   // app.get("/auth/github", github);
