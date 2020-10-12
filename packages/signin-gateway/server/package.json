@@ -34,7 +34,7 @@
     "egg-passport-local": "^1.2.1",
     "egg-scripts": "^2.6.0",
     "egg-sequelize": "^5.2.2",
-    "egg-shell-decorators-plus": "^0.2.1",
+    "egg-shell-decorators-plus": "^0.2.2",
     "jsonwebtoken": "^8.5.1",
     "lru-cache": "^6.0.0",
     "mysql2": "^2.1.0",

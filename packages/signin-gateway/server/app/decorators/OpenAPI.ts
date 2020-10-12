@@ -6,14 +6,14 @@ export default function OpenAPI(supportComplex: boolean = false): any {
       Reflect.defineMetadata("aaa", "aaa", target[methodName]);
     }
 
-    Reflect.defineMetadata(
-      "preProcessor",
-      function (this: Controller) {
-        this.ctx.set({
-          "Access-Control-Allow-Origin": this.ctx.request.headers.origin,
-        });
-      },
-      target[methodName]
-    );
+    const current =
+      Reflect.getOwnMetadata("preProcessor", target, methodName) || [];
+
+    current.push(function (this: Controller) {
+      this.ctx.set({
+        "Access-Control-Allow-Origin": this.ctx.request.headers.origin,
+      });
+    });
+    Reflect.defineMetadata("preProcessor", current, target[methodName]);
   };
 }
