@@ -19,7 +19,7 @@ export default (app: Application) => {
 
   router.redirect("/redirect", "/", 302);
   // Authentication routes
-  // const github = app.passport.authenticate("github");
+  const github = app.passport.authenticate("github");
   // app.get("/auth/github", github);
   // app.get("/auth/github/callback", github);
 
@@ -35,6 +35,13 @@ export default (app: Application) => {
     successRedirect: "/auth/verify-third-party-user",
     scope: "https://www.googleapis.com/auth/drive.metadata.readonly",
   });
+
+  // app.passport.verify(async (ctx, user) => {
+  //   console.log(app.controller.auth);
+
+  //   app.
+  //   app.controller.auth.wireProviderCredential();
+  // });
 
   app.passport.mount("local", {
     loginURL: "/auth/local",

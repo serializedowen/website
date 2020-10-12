@@ -11,7 +11,7 @@ export default (appInfo: EggAppInfo) => {
   config.keys = appInfo.name + "_1597134785968_369";
 
   // add your egg config in here
-  config.middleware = ["injectUserdata", "errorHandler"];
+  config.middleware = ["errorHandler", "captureRedirect", "injectUserdata"];
 
   // add your special config in here
   const bizConfig = {

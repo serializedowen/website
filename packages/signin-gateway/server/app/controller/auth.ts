@@ -12,6 +12,10 @@ import activeUserCache from "app/activeUserCache";
 import Authenticated from "app/decorators/Authenticated";
 @Prefix("/auth")
 export default class AuthController extends Controller {
+  constructor(props) {
+    super(props);
+  }
+
   @Get("/aa")
   public async index(
     @Body aaa: UserDTO,
@@ -28,7 +32,7 @@ export default class AuthController extends Controller {
 
   @Get("/check")
   public async check() {
-    if (this.ctx.user && this.ctx.user.userModel) this.ctx.status = 200;
+    if (this.ctx.isAuthenticated()) this.ctx.status = 200;
     else this.ctx.status = 401;
   }
 
@@ -36,6 +40,11 @@ export default class AuthController extends Controller {
   @Authenticated()
   public decodeToken() {
     this.ctx.body = this.ctx.user;
+  }
+
+  @Get("/signout")
+  public async signout() {
+    this.ctx.logout();
   }
 
   @Post("/signup")
@@ -51,7 +60,7 @@ export default class AuthController extends Controller {
 
     const thirdPartyData = this.ctx.user;
 
-    this.ctx.status = 204;
+    this.ctx.status = 200;
 
     switch (thirdPartyData.provider) {
       case "github": {
@@ -83,11 +92,15 @@ export default class AuthController extends Controller {
           this.ctx.user.userId = user.id;
         }
 
-        return;
+        break;
       }
 
       default:
-        return;
+    }
+
+    const redirectUrl = this.ctx.cookies.get("redirect", { encrypt: true });
+    if (redirectUrl) {
+      this.ctx.redirect(redirectUrl);
     }
   }
   // public async login(username, password) {
