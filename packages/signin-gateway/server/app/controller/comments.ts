@@ -1,5 +1,12 @@
 import { Controller } from "egg";
-import { Prefix, Get, Post, Body, Param } from "egg-shell-decorators-plus";
+import {
+  Prefix,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+} from "egg-shell-decorators-plus";
 
 import Authenticated from "app/decorators/Authenticated";
 import { commentDTO } from "app/model/dto/commentDTO";
@@ -21,5 +28,14 @@ export default class CommentsController extends Controller {
   public async getComments(@Param("identifier") identifier: string) {
     this.ctx.body = await this.service.commentService.getComments(identifier);
     this.ctx.status = 200;
+  }
+
+  @Authenticated()
+  @Delete("/:identifier/delete/:commentId")
+  public async deleteComment(
+    @Param("identifier") identifier: string,
+    @Param("commentId") commentId: string
+  ) {
+    await this.service.commentService.deleteComment(commentId);
   }
 }

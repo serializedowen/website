@@ -18,4 +18,11 @@ export default class CommentService extends Service {
       order: [["createdAt", "DESC"]],
     });
   }
+
+  public async deleteComment(commentId: string) {
+    if (!this.ctx.user?.userId) this.ctx.throw(403);
+    await this.ctx.model.Comment.destroy({
+      where: { id: commentId, userId: this.ctx.user?.userId },
+    });
+  }
 }
