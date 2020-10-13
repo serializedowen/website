@@ -6,28 +6,16 @@ import {
   Body,
   Query,
   Header,
+  Param,
 } from "egg-shell-decorators-plus";
 import { UserDTO } from "app/model/dto/UserDTO";
 import activeUserCache from "app/activeUserCache";
 import Authenticated from "app/decorators/Authenticated";
+import { pick } from "lodash";
 @Prefix("/auth")
 export default class AuthController extends Controller {
   constructor(props) {
     super(props);
-  }
-
-  @Get("/aa")
-  public async index(
-    @Body aaa: UserDTO,
-    @Query("username") username: String,
-    @Header("accessToken") token: String
-  ) {
-    const { ctx } = this;
-
-    console.log(aaa);
-    console.log(token);
-    console.log(username);
-    ctx.body = await ctx.service.test.sayHi("egg");
   }
 
   @Get("/check")
@@ -103,8 +91,24 @@ export default class AuthController extends Controller {
       this.ctx.redirect(redirectUrl);
     }
   }
-  // public async login(username, password) {
 
-  //   this.ctx.service.
-  // }
+  @Get("/:userId")
+  @Authenticated()
+  public async getUserData(@Param("userId") userId: number) {
+    const user = await this.ctx.service.auth.findUserByPK(Number(userId));
+
+    if (user) this.ctx.body = user;
+    else this.ctx.status = 404;
+  }
+
+  @Post("/:userId/update")
+  @Authenticated()
+  public async updateUserInfo(
+    @Param("userId") userId: string,
+    @Body updated: UserDTO
+  ) {
+    const m = await this.ctx.user?.userModel.update(
+      pick(updated, ["phone", "age", "name", "email"])
+    );
+  }
 }

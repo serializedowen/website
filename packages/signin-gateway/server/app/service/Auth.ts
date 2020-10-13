@@ -31,7 +31,7 @@ export default class Auth extends Service {
     });
   }
 
-  public async findUserByPK(id: string) {
+  public async findUserByPK(id: number) {
     return await this.app.model.User.findByPk(id);
   }
 

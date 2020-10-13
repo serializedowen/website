@@ -25,6 +25,7 @@ module.exports = (app: Application, model: IModel) => {
     },
     identifier: {
       type: STRING,
+      allowNull: false,
     },
 
     createdAt: DATE,
