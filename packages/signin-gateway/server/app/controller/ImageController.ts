@@ -6,6 +6,14 @@ import { Post, Prefix } from "egg-shell-decorators-plus";
 export default class ImageController extends Controller {
   @Post("/upload")
   public async upload() {
-    console.log(this.ctx);
+    if (
+      this.ctx.request.files.length === 0 ||
+      this.ctx.request.files.length > 1
+    )
+      this.ctx.throw(400);
+    else
+      await this.ctx.service.avatarService.uploadAvatar(
+        this.ctx.request.files[0]
+      );
   }
 }

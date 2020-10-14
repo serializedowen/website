@@ -11,6 +11,8 @@ import {
 import Authenticated from "app/decorators/Authenticated";
 import { commentDTO } from "app/model/dto/commentDTO";
 import OpenAPI from "app/decorators/OpenAPI";
+import UseGuard from "app/decorators/guards/UseGuard";
+import AdminAndSelfGuard from "app/decorators/guards/AdminAndSelfGuard";
 
 @Prefix("/comments")
 export default class CommentController extends Controller {
@@ -31,11 +33,14 @@ export default class CommentController extends Controller {
   }
 
   @Authenticated()
-  @Delete("/:identifier/delete/:commentId")
+  @Delete("/:identifier/:commentId/delete")
   public async deleteComment(
     @Param("identifier") identifier: string,
     @Param("commentId") commentId: string
   ) {
     await this.service.commentService.deleteComment(commentId);
   }
+
+  @Post("/:identifier/:commentId/like")
+  public async likeComment() {}
 }

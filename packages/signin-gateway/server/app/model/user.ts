@@ -28,6 +28,7 @@ module.exports = (app: Application, model: IModel) => {
       avatarUrl: TEXT,
       privilege: { type: ENUM("normal", "admin"), defaultValue: "normal" },
       isActive: { type: BOOLEAN, defaultValue: true },
+      isCdnAvatar: { type: BOOLEAN, defaultValue: false, allowNull: false },
     },
     {
       defaultScope: {

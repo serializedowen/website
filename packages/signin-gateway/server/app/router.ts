@@ -3,6 +3,11 @@ import { EggShell } from "egg-shell-decorators-plus";
 
 export default (app: Application) => {
   app.model.Comment.belongsTo(app.model.User);
+  app.model.Like.belongsTo(app.model.User);
+  app.model.Like.belongsTo(app.model.Comment);
+
+  app.model.User.hasMany(app.model.Like);
+  app.model.Comment.hasMany(app.model.Like);
   app.model.User.hasMany(app.model.Comment);
 
   app.model.Comment.addScope("includeUserData", {
@@ -14,11 +19,11 @@ export default (app: Application) => {
   });
 
   app.model.sync().then(() => console.log("db synced"));
-  const { controller, router } = app;
+  const { router } = app;
 
   router.redirect("/redirect", "/", 302);
   // Authentication routes
-  const github = app.passport.authenticate("github");
+  // const github = app.passport.authenticate("github");
   // app.get("/auth/github", github);
   // app.get("/auth/github/callback", github);
 

@@ -9,6 +9,10 @@ export default (appInfo: EggAppInfo) => {
 
   config.fullQiniu = qiniuConfig();
 
+  config.multipart = {
+    mode: "file",
+  };
+
   // override config from framework / plugin
   // use for cookie sign key, should change to your own and keep security
   config.keys = appInfo.name + "_1597134785968_369";
