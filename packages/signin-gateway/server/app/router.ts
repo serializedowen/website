@@ -15,7 +15,6 @@ export default (app: Application) => {
 
   app.model.sync().then(() => console.log("db synced"));
   const { controller, router } = app;
-  router.get("/", controller.home.index);
 
   router.redirect("/redirect", "/", 302);
   // Authentication routes

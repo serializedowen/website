@@ -2,9 +2,12 @@ import { EggAppConfig, EggAppInfo, PowerPartial } from "egg";
 import sqlConfig from "./sql.config";
 import "reflect-metadata";
 import "tsconfig-paths/register";
+import qiniuConfig from "./qiniu.config";
 
 export default (appInfo: EggAppInfo) => {
   const config = {} as PowerPartial<EggAppConfig>;
+
+  config.fullQiniu = qiniuConfig();
 
   // override config from framework / plugin
   // use for cookie sign key, should change to your own and keep security

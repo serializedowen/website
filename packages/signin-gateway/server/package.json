@@ -28,6 +28,7 @@
     "class-validator": "^0.12.2",
     "cross-env": "^7.0.2",
     "egg": "^2.6.1",
+    "egg-full-qiniu": "^1.1.6",
     "egg-passport": "^2.1.1",
     "egg-passport-github": "^1.0.0",
     "egg-passport-google": "^1.0.1",
@@ -39,8 +40,10 @@
     "lru-cache": "^6.0.0",
     "mysql2": "^2.1.0",
     "passport-github": "^1.1.0",
+    "qiniu": "^7.3.2",
     "reflect-metadata": "^0.1.13",
     "sequelize-cli": "^6.2.0",
+    "sharp": "^0.26.1",
     "tsconfig-paths": "^3.9.0",
     "uuid": "^8.3.1"
   },

@@ -2,14 +2,16 @@
 // Do not modify this file!!!!!!!!!
 
 import 'egg';
-import ExportAuth from '../../../app/controller/auth';
-import ExportComments from '../../../app/controller/comments';
-import ExportHome from '../../../app/controller/home';
+import ExportAuthController from '../../../app/controller/AuthController';
+import ExportCommentController from '../../../app/controller/CommentController';
+import ExportHomeController from '../../../app/controller/HomeController';
+import ExportImageController from '../../../app/controller/ImageController';
 
 declare module 'egg' {
   interface IController {
-    auth: ExportAuth;
-    comments: ExportComments;
-    home: ExportHome;
+    authController: ExportAuthController;
+    commentController: ExportCommentController;
+    homeController: ExportHomeController;
+    imageController: ExportImageController;
   }
 }

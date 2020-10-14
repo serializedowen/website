@@ -7,11 +7,16 @@ import {
   Query,
   Header,
   Param,
+  Guard,
 } from "egg-shell-decorators-plus";
 import { UserDTO } from "app/model/dto/UserDTO";
 import activeUserCache from "app/activeUserCache";
 import Authenticated from "app/decorators/Authenticated";
 import { pick } from "lodash";
+
+import UseGuard from "app/decorators/guards/UseGuard";
+import AdminAndSelfGuard from "app/decorators/guards/AdminAndSelfGuard";
+
 @Prefix("/auth")
 export default class AuthController extends Controller {
   constructor(props) {
@@ -93,6 +98,7 @@ export default class AuthController extends Controller {
   }
 
   @Get("/:userId")
+  @UseGuard(AdminAndSelfGuard)
   @Authenticated()
   public async getUserData(@Param("userId") userId: number) {
     const user = await this.ctx.service.auth.findUserByPK(Number(userId));
@@ -102,6 +108,7 @@ export default class AuthController extends Controller {
   }
 
   @Post("/:userId/update")
+  @UseGuard(AdminAndSelfGuard)
   @Authenticated()
   public async updateUserInfo(
     @Param("userId") userId: string,

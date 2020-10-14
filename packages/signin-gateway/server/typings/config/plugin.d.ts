@@ -14,6 +14,7 @@ import 'egg-schedule';
 import 'egg-static';
 import 'egg-jsonp';
 import 'egg-view';
+import 'egg-full-qiniu';
 import 'egg-passport';
 import 'egg-passport-github';
 import 'egg-passport-google';
@@ -34,6 +35,7 @@ declare module 'egg' {
     static?: EggPluginItem;
     jsonp?: EggPluginItem;
     view?: EggPluginItem;
+    fullQiniu?: EggPluginItem;
     passport?: EggPluginItem;
     passportGithub?: EggPluginItem;
     passportGoogle?: EggPluginItem;

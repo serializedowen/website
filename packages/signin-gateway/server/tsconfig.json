@@ -22,7 +22,8 @@
     "inlineSourceMap": true,
     "importHelpers": true,
     "paths": {
-      "config/*": ["config/*"]
+      "config/*": ["config/*"],
+      "config-storage/*": ["config-storage/*"]
     },
     "baseUrl": "."
   },

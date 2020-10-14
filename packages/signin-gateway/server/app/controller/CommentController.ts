@@ -13,7 +13,7 @@ import { commentDTO } from "app/model/dto/commentDTO";
 import OpenAPI from "app/decorators/OpenAPI";
 
 @Prefix("/comments")
-export default class CommentsController extends Controller {
+export default class CommentController extends Controller {
   @Authenticated()
   @Post("/:identifier/add")
   public async addComment(
