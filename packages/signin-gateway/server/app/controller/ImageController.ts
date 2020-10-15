@@ -15,5 +15,7 @@ export default class ImageController extends Controller {
       await this.ctx.service.avatarService.uploadAvatar(
         this.ctx.request.files[0]
       );
+
+    // this.app.runInBackground()
   }
 }

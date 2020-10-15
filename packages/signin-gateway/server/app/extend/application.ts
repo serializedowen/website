@@ -25,6 +25,9 @@ export default {
     },
 
     getPutExtras: () => new qiniu.form_up.PutExtra(),
+
+    // getPutExtras: (...args: Parameters<qiniu.form_up.PutExtra>) =>
+    //   new qiniu.form_up.PutExtra(),
     formUploader: new qiniu.form_up.FormUploader(config),
   },
 };

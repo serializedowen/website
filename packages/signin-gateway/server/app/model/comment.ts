@@ -1,7 +1,8 @@
 import { Application, IModel } from "egg";
 import { v4 as uuid } from "uuid";
+import { ModelCtor, Model } from "sequelize";
 
-module.exports = (app: Application, model: IModel) => {
+const modelBuilder = (app: Application, model: IModel) => {
   const { STRING, INTEGER, DATE, TEXT, UUID, UUIDV4 } = app.Sequelize;
   const Comment = model.define("comment", {
     id: {
@@ -32,5 +33,7 @@ module.exports = (app: Application, model: IModel) => {
     updatedAt: DATE,
   });
 
-  return Comment;
+  return Comment as ModelCtor<Model>;
 };
+
+export default modelBuilder;

@@ -1,22 +1,11 @@
 import { Application } from "egg";
 import { EggShell } from "egg-shell-decorators-plus";
+import addRelations from "./relations";
+import addScopes from "./scopes";
 
 export default (app: Application) => {
-  app.model.Comment.belongsTo(app.model.User);
-  app.model.Like.belongsTo(app.model.User);
-  app.model.Like.belongsTo(app.model.Comment);
-
-  app.model.User.hasMany(app.model.Like);
-  app.model.Comment.hasMany(app.model.Like);
-  app.model.User.hasMany(app.model.Comment);
-
-  app.model.Comment.addScope("includeUserData", {
-    include: [
-      {
-        model: app.model.User,
-      },
-    ],
-  });
+  addRelations(app.model);
+  addScopes(app.model);
 
   app.model.sync().then(() => console.log("db synced"));
   const { router } = app;
@@ -39,13 +28,6 @@ export default (app: Application) => {
     successRedirect: "/auth/verify-third-party-user",
     scope: "https://www.googleapis.com/auth/drive.metadata.readonly",
   });
-
-  // app.passport.verify(async (ctx, user) => {
-  //   console.log(app.controller.auth);
-
-  //   app.
-  //   app.controller.auth.wireProviderCredential();
-  // });
 
   app.passport.mount("local", {
     loginURL: "/auth/local",

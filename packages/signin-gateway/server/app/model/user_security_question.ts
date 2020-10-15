@@ -1,6 +1,6 @@
 import { Application, IModel } from "egg";
-
-module.exports = (app: Application, model: IModel) => {
+import { ModelCtor, Model } from "sequelize";
+const modelBuilder = (app: Application, model: IModel) => {
   const { INTEGER, TEXT } = app.Sequelize;
 
   const UserSecurityQuestion = app.model.define("user_security_question", {
@@ -18,5 +18,7 @@ module.exports = (app: Application, model: IModel) => {
   });
 
   // model.sync();
-  return UserSecurityQuestion;
+  return UserSecurityQuestion as ModelCtor<Model>;
 };
+
+export default modelBuilder;

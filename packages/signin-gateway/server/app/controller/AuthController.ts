@@ -13,9 +13,10 @@ import { UserDTO } from "app/model/dto/UserDTO";
 import activeUserCache from "app/activeUserCache";
 import Authenticated from "app/decorators/Authenticated";
 import { pick } from "lodash";
-
+import { Model } from "sequelize";
 import UseGuard from "app/decorators/guards/UseGuard";
 import AdminAndSelfGuard from "app/decorators/guards/AdminAndSelfGuard";
+import { LooseModel } from "app";
 
 @Prefix("/auth")
 export default class AuthController extends Controller {
@@ -63,17 +64,24 @@ export default class AuthController extends Controller {
         params.name = thirdPartyData.name;
         params.password = "123456";
 
-        const record = await this.service.auth.findLinkedLocalAccountId(
-          thirdPartyData.id,
-          thirdPartyData.provider
+        const record = <LooseModel>(
+          await this.service.auth.findLinkedLocalAccountId(
+            thirdPartyData.id,
+            thirdPartyData.provider
+          )
         );
 
         if (record) {
-          const user = await this.service.auth.findUserByPK(record.userId);
-          activeUserCache.set(user.id, user);
-          this.ctx.user.userId = user.id;
+          const user = <LooseModel>(
+            await this.service.auth.findUserByPK(record.userId)
+          );
+
+          if (user) {
+            activeUserCache.set(user.id, user);
+            this.ctx.user.userId = user.id;
+          }
         } else {
-          const user = await this.service.auth.createUser(params);
+          const user = <LooseModel>await this.service.auth.createUser(params);
           activeUserCache.set(user.id, user);
 
           await this.service.auth.createProviderMetadata({
@@ -93,6 +101,7 @@ export default class AuthController extends Controller {
 
     const redirectUrl = this.ctx.cookies.get("redirect", { encrypt: true });
     if (redirectUrl) {
+      this.ctx.cookies.set("redirect", null);
       this.ctx.redirect(redirectUrl);
     }
   }

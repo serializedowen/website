@@ -25,4 +25,8 @@ export default class CommentService extends Service {
       where: { id: commentId, userId: this.ctx.user?.userId },
     });
   }
+
+  public async likeComment(commentId: string, identifier: string) {
+    // this.ctx.model.Like
+  }
 }

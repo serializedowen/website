@@ -42,5 +42,11 @@ export default class CommentController extends Controller {
   }
 
   @Post("/:identifier/:commentId/like")
-  public async likeComment() {}
+  @Authenticated()
+  public async likeComment(
+    @Param("identifier") identifier: string,
+    @Param("commentId") commentId: string
+  ) {
+    this.service.commentService.likeComment(commentId, identifier);
+  }
 }

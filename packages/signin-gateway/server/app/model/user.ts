@@ -1,6 +1,6 @@
 import { Application, IModel } from "egg";
-
-module.exports = (app: Application, model: IModel) => {
+import { ModelCtor, Model } from "sequelize";
+const modelBuilder = (app: Application, model: IModel) => {
   const {
     STRING,
     INTEGER,
@@ -41,5 +41,7 @@ module.exports = (app: Application, model: IModel) => {
   );
 
   // model.sync();
-  return User;
+  return User as ModelCtor<Model>;
 };
+
+export default modelBuilder;
