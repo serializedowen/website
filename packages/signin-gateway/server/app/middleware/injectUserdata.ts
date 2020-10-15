@@ -7,13 +7,15 @@ module.exports = () => async (ctx: Context, next) => {
     if (activeUserCache.has(ctx.user.userId)) {
       const model = activeUserCache.get(ctx.user.userId);
 
-      model && activeUserCache.set(ctx.user.userId, model);
+      if (model) {
+        model && activeUserCache.set(ctx.user.userId, model);
+        ctx.user.userModel = model;
+      }
     } else {
       const model = await ctx.service.auth.findUserByPK(ctx.user.userId);
 
       if (model) {
         activeUserCache.set(ctx.user.userId, model);
-
         ctx.user.userModel = model;
       }
     }

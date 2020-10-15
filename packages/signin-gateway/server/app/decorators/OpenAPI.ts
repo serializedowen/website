@@ -11,7 +11,8 @@ export default function OpenAPI(supportComplex: boolean = false): any {
 
     current.push(function (this: Controller) {
       this.ctx.set({
-        "Access-Control-Allow-Origin": this.ctx.request.headers.origin,
+        "Access-Control-Allow-Origin":
+          this.ctx.request.headers.origin || this.ctx.request.headers.host,
       });
     });
     Reflect.defineMetadata("preProcessor", current, target[methodName]);

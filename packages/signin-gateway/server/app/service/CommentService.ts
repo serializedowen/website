@@ -13,10 +13,15 @@ export default class CommentService extends Service {
   }
 
   public async getComments(identifier: string) {
-    return await this.ctx.model.Comment.scope("includeUserData").findAll({
+    const comments = await this.ctx.model.Comment.scope(
+      "includeUserData"
+    ).findAll({
       where: { identifier },
       order: [["createdAt", "DESC"]],
+      include: [{ model: this.ctx.model.Like }],
     });
+
+    return comments;
   }
 
   public async deleteComment(commentId: string) {
@@ -27,6 +32,22 @@ export default class CommentService extends Service {
   }
 
   public async likeComment(commentId: string, identifier: string) {
-    // this.ctx.model.Like
+    //@ts-ignore
+
+    // const transaction = new this.app.Sequelize.Transaction();
+
+    try {
+      //@ts-ignore
+      const like = await this.ctx.user?.userModel.createLike({});
+      const comment = await this.ctx.model.Comment.findByPk(commentId);
+
+      //@ts-ignore
+      comment.addLike(like);
+
+      // transaction.commit();
+    } catch (e) {
+      console.log(e);
+      // transaction.rollback();
+    }
   }
 }
