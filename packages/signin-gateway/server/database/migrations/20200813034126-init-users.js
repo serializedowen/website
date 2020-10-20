@@ -17,7 +17,6 @@ module.exports = {
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
     queryInterface.createTable("users", {
-      id: Sequelize.INTEGER,
       name: { type: STRING(30), unique: true, allowNull: false },
       id: { type: INTEGER, primaryKey: true, autoIncrement: true },
       name: { type: STRING(30), unique: true, allowNull: false },

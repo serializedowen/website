@@ -7,4 +7,4 @@ declare module "egg" {
   }
 }
 
-declare type LooseModel = Model<any, any> & { [P in string] };
+declare type LooseModel = (Model<any, any> & { [P in string] }) | undefined;

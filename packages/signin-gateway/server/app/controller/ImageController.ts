@@ -1,5 +1,6 @@
 import { Controller } from "egg";
 import { Post, Prefix } from "egg-shell-decorators-plus";
+import sharp from "sharp";
 // import qiniu from 'qiniu'
 
 @Prefix("/image")
@@ -11,10 +12,11 @@ export default class ImageController extends Controller {
       this.ctx.request.files.length > 1
     )
       this.ctx.throw(400);
-    else
-      await this.ctx.service.avatarService.uploadAvatar(
-        this.ctx.request.files[0]
-      );
+    else {
+      const img = this.ctx.request.files[0];
+      sharp(img.filepath);
+      await this.ctx.service.avatarService.uploadAvatar(img);
+    }
 
     // this.app.runInBackground()
   }

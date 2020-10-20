@@ -1,4 +1,4 @@
-import { Application, IModel } from "egg";
+import { Application, AppWorkerLoader, IModel } from "egg";
 import { ModelCtor, Model } from "sequelize";
 const modelBuilder = (app: Application, model: IModel) => {
   const { INTEGER, TEXT } = app.Sequelize;

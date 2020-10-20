@@ -11,8 +11,6 @@ import {
 import Authenticated from "app/decorators/Authenticated";
 import { commentDTO } from "app/model/dto/commentDTO";
 import OpenAPI from "app/decorators/OpenAPI";
-import UseGuard from "app/decorators/guards/UseGuard";
-import AdminAndSelfGuard from "app/decorators/guards/AdminAndSelfGuard";
 
 @Prefix("/comments")
 export default class CommentController extends Controller {
@@ -48,6 +46,6 @@ export default class CommentController extends Controller {
     @Param("identifier") identifier: string,
     @Param("commentId") commentId: string
   ) {
-    this.service.commentService.likeComment(commentId, identifier);
+    await this.service.commentService.likeComment(commentId, identifier);
   }
 }

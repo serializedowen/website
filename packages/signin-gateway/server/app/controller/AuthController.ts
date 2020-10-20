@@ -57,6 +57,35 @@ export default class AuthController extends Controller {
     this.ctx.status = 200;
 
     switch (thirdPartyData.provider) {
+      case "local": {
+        try {
+          const user = <LooseModel>await this.app.model.User.unscoped().findOne(
+            {
+              where: { name: thirdPartyData.username },
+            }
+          );
+          if (user) {
+            const pwd = this.service.auth.verifyPassword(
+              thirdPartyData.password,
+              user.salt
+            );
+
+            if (pwd === user.password) {
+              this.ctx.user.userId = user.id;
+              this.ctx.user.userModel = user;
+              activeUserCache.set(user.id, user);
+            } else {
+              this.ctx.throw(401);
+            }
+          } else {
+            this.ctx.throw(401);
+          }
+          break;
+        } catch (e) {
+          this.ctx.logout();
+          throw e;
+        }
+      }
       case "github": {
         const params: Partial<userDAO> = {};
 
@@ -82,15 +111,18 @@ export default class AuthController extends Controller {
           }
         } else {
           const user = <LooseModel>await this.service.auth.createUser(params);
-          activeUserCache.set(user.id, user);
 
-          await this.service.auth.createProviderMetadata({
-            provider: thirdPartyData.provider,
-            providerId: thirdPartyData.id,
-            userId: user.id,
-          });
+          if (user) {
+            activeUserCache.set(user.id, user);
 
-          this.ctx.user.userId = user.id;
+            await this.service.auth.createProviderMetadata({
+              provider: thirdPartyData.provider,
+              providerId: thirdPartyData.id,
+              userId: user.id,
+            });
+
+            this.ctx.user.userId = user.id;
+          }
         }
 
         break;

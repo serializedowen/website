@@ -18,7 +18,7 @@ export default class CommentService extends Service {
     ).findAll({
       where: { identifier },
       order: [["createdAt", "DESC"]],
-      include: [{ model: this.ctx.model.Like }],
+      include: [{ model: this.ctx.model.Like, attributes: ["id"] }],
     });
 
     return comments;
@@ -31,23 +31,22 @@ export default class CommentService extends Service {
     });
   }
 
+  public async unlikeComment(commentId: string, identifier: string) {
+    const like = await this.ctx.model.Like.findOne({
+      where: { commentId, userId: String(this.ctx.user?.userId) },
+    });
+    //@ts-ignore
+    this.ctx.user.removeLike(like);
+  }
+
   public async likeComment(commentId: string, identifier: string) {
     //@ts-ignore
+    const like = await this.ctx.user?.userModel.createLike({});
+    const comment = await this.ctx.model.Comment.findByPk(commentId);
 
-    // const transaction = new this.app.Sequelize.Transaction();
+    //@ts-ignore
+    comment.addLike(like);
 
-    try {
-      //@ts-ignore
-      const like = await this.ctx.user?.userModel.createLike({});
-      const comment = await this.ctx.model.Comment.findByPk(commentId);
-
-      //@ts-ignore
-      comment.addLike(like);
-
-      // transaction.commit();
-    } catch (e) {
-      console.log(e);
-      // transaction.rollback();
-    }
+    // transaction.commit();
   }
 }

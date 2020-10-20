@@ -10,6 +10,7 @@
   "scripts": {
     "start": "cross-env EGG_SERVER_ENV=prod egg-scripts start --daemon --title=egg-server-sign-in-egg-server",
     "stop": "egg-scripts stop --title=egg-server-sign-in-egg-server",
+    "prod-migrate": "cross-env NODE_ENV=production sequelize-cli db:migrate",
     "dev": "egg-bin dev",
     "debug": "egg-bin debug",
     "test-local": "egg-bin test",
@@ -24,6 +25,7 @@
   "dependencies": {
     "@types/egg": "^1.5.0",
     "@types/lru-cache": "^5.1.0",
+    "@types/passport-local": "^1.0.33",
     "@types/uuid": "^8.3.0",
     "class-validator": "^0.12.2",
     "cross-env": "^7.0.2",
@@ -33,7 +35,6 @@
     "egg-passport": "^2.1.1",
     "egg-passport-github": "^1.0.0",
     "egg-passport-google": "^1.0.1",
-    "egg-passport-local": "^1.2.1",
     "egg-scripts": "^2.6.0",
     "egg-sequelize": "^5.2.2",
     "egg-shell-decorators-plus": "^0.2.2",
@@ -41,6 +42,7 @@
     "lru-cache": "^6.0.0",
     "mysql2": "^2.1.0",
     "passport-github": "^1.1.0",
+    "passport-local": "^1.0.0",
     "qiniu": "^7.3.2",
     "reflect-metadata": "^0.1.13",
     "sequelize-cli": "^6.2.0",
@@ -51,6 +53,7 @@
   "devDependencies": {
     "@types/mocha": "^2.2.40",
     "@types/node": "^7.0.12",
+    "@types/sharp": "^0.26.0",
     "@types/supertest": "^2.0.0",
     "autod": "^3.0.1",
     "autod-egg": "^1.1.0",
