@@ -22,6 +22,12 @@ export default (app: Application) => {
     successRedirect: "/auth/verify-third-party-user",
   });
 
+  app.passport.mount("facebook", {
+    loginURL: "/auth/facebook",
+    callbackURL: "/auth/facebook/facebook",
+    successRedirect: "/auth/verify-third-party-user",
+  });
+
   app.passport.mount("google", {
     loginURL: "/auth/google",
     callbackURL: "/auth/google/callback",

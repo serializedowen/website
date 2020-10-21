@@ -36,6 +36,11 @@ export default (appInfo: EggAppInfo) => {
 
   config.passportLocal = {};
 
+  config.passportFacebook = {
+    key: "3760853287279992",
+    secret: "db5d9d43701d143f65af3ce6b89a4efe",
+  };
+
   config.passportGoogle = {
     key:
       "632750028016-qro4a89m54abms5glei8qqe9nacdvt2n.apps.googleusercontent.com",

@@ -18,6 +18,7 @@ import 'egg-full-qiniu';
 import 'egg-passport';
 import 'egg-passport-github';
 import 'egg-passport-google';
+import 'egg-passport-facebook';
 import 'egg-passport-local';
 import 'egg-sequelize';
 import { EggPluginItem } from 'egg';
@@ -39,6 +40,7 @@ declare module 'egg' {
     passport?: EggPluginItem;
     passportGithub?: EggPluginItem;
     passportGoogle?: EggPluginItem;
+    passportFacebook?: EggPluginItem;
     passportLocal?: EggPluginItem;
     sequelize?: EggPluginItem;
   }

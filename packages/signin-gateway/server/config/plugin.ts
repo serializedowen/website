@@ -25,6 +25,11 @@ const plugin: EggPlugin = {
     package: "egg-passport-google",
   },
 
+  passportFacebook: {
+    enable: true,
+    package: "egg-passport-facebook",
+  },
+
   passportLocal: {
     enable: true,
     package: "egg-passport-local",
