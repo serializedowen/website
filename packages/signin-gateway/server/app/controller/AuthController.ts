@@ -24,14 +24,29 @@ export default class AuthController extends Controller {
     super(props);
   }
 
+  @Get("/password/reset")
+  public async passwordReset() {
+    this.ctx.service.emailService.sendEmail({
+      to: "serializedowen@163.com",
+      subject: "111",
+      text: "111",
+    });
+  }
+
   @Get("/check")
   public async check() {
     if (this.ctx.isAuthenticated()) this.ctx.status = 200;
     else this.ctx.status = 401;
   }
 
-  @Get("/decodeToken")
+  @Get("/verify-email")
   @Authenticated()
+  public async verifyEmail(@Query("SESSION") session: string) {
+    await this.service.emailService.verifyUserEmail();
+  }
+
+  @Get("/decodeToken")
+  @Authenticated(400)
   public decodeToken() {
     this.ctx.body = this.ctx.user;
   }
