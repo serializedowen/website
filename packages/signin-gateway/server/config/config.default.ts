@@ -19,6 +19,8 @@ export default (appInfo: EggAppInfo) => {
     mapping: {
       ".pug": "pug",
     },
+    defaultExtension: "pug",
+    defaultViewEngine: "pug",
   };
 
   config.pug = {};

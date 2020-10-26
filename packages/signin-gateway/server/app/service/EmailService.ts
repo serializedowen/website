@@ -7,6 +7,11 @@ import { Service } from "egg";
 // );
 
 export default class EmailService extends Service {
+  public async updateUserEmailStatus(userId: number) {
+    const user = await this.ctx.model.User.findByPk(userId);
+    return await user?.update({ isVerifiedEmail: true });
+  }
+
   public async verifyUserEmail() {
     //@ts-ignore
     const email = this.ctx.user?.userModel.email;
@@ -14,15 +19,23 @@ export default class EmailService extends Service {
     if (!email) this.ctx.throw(400, "no email associated with this account.");
     else {
       const jwt = this.service.jwt.encode(
-        { userId: this.ctx.user?.userId, email },
+        {
+          userId: this.ctx.user?.userId,
+          email,
+          redirect: this.config.appDomain,
+        },
         "1h"
       );
 
-      const html = await this.ctx.renderString("verifyEmail.pug", {
-        url: `http://localhost:7001/auth/verifier?SESSIONID=${jwt}`,
-      });
+      const html = await this.ctx.renderView(
+        "verifyEmail.pug",
+        {
+          url: `${this.ctx.origin}/auth/verify-email?SESSIONID=${jwt}`,
+        },
+        {}
+      );
 
-      this.sendEmail({
+      return this.sendEmail({
         to: email,
         subject: "验证邮箱",
         html,

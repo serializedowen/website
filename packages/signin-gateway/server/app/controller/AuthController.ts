@@ -13,7 +13,7 @@ import { UserDTO } from "app/model/dto/UserDTO";
 import activeUserCache from "app/activeUserCache";
 import Authenticated from "app/decorators/Authenticated";
 import { pick } from "lodash";
-import { Model } from "sequelize";
+
 import UseGuard from "app/decorators/guards/UseGuard";
 import AdminAndSelfGuard from "app/decorators/guards/AdminAndSelfGuard";
 import { LooseModel } from "app";
@@ -41,8 +41,20 @@ export default class AuthController extends Controller {
 
   @Get("/verify-email")
   @Authenticated()
-  public async verifyEmail(@Query("SESSION") session: string) {
-    await this.service.emailService.verifyUserEmail();
+  public async verifyEmail(@Query("SESSIONID") session: string) {
+    if (session) {
+      try {
+        const data = this.service.jwt.decode(session);
+        await this.service.emailService.updateUserEmailStatus(data.userId);
+        await this.ctx.render("redirecting.pug", { url: data.redirect });
+      } catch (e) {
+        this.logger.error(e);
+        this.ctx.throw(400, "SESSIONID错误或已过期");
+      }
+    } else {
+      const res = await this.service.emailService.verifyUserEmail();
+      if (res.status !== 200) this.ctx.throw(500, "email发送遇到未知错误");
+    }
   }
 
   @Get("/decodeToken")

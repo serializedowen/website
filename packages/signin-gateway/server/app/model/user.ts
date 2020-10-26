@@ -29,6 +29,7 @@ const modelBuilder = (app: Application, model: IModel) => {
       privilege: { type: ENUM("normal", "admin"), defaultValue: "normal" },
       isActive: { type: BOOLEAN, defaultValue: true },
       isCdnAvatar: { type: BOOLEAN, defaultValue: false, allowNull: false },
+      isVerifiedEmail: { type: BOOLEAN, defaultValue: false, allowNull: false },
     },
     {
       defaultScope: {

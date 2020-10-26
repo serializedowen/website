@@ -4,6 +4,19 @@ declare module "egg" {
     user?: { userModel: Model<any, any>; userId: number } & {
       [key in string]: any;
     };
+
+    /**
+     * Render a file by view engine
+     * @param {String} name - the file path based on root
+     * @param {Object} [locals] - data used by template
+     * @param {Object} [options] - view options, you can use `options.viewEngine` to specify view engine
+     * @return {Promise<String>} result - return a promise with a render result
+     */
+    renderView(
+      name: string,
+      locals?: any,
+      options?: RenderOptions
+    ): Promise<string>;
   }
 }
 
