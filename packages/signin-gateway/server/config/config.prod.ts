@@ -4,6 +4,7 @@ export default () => {
   const config: PowerPartial<EggAppConfig> = {};
 
   const session = { domain: "serializedowen.com" };
+  const appDomain = "serializedowen.com";
 
-  return { ...config, session, sequelize: sqlconfig };
+  return { ...config, appDomain, session, sequelize: sqlconfig };
 };

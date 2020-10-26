@@ -9,9 +9,19 @@ export default (appInfo: EggAppInfo) => {
 
   config.fullQiniu = qiniuConfig();
 
+  config.emailServer = { host: "127.0.0.1", port: 32151 };
+
   config.multipart = {
     mode: "file",
   };
+
+  config.view = {
+    mapping: {
+      ".pug": "pug",
+    },
+  };
+
+  config.pug = {};
 
   // override config from framework / plugin
   // use for cookie sign key, should change to your own and keep security

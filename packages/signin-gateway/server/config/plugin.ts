@@ -11,6 +11,11 @@ const plugin: EggPlugin = {
     package: "egg-full-qiniu",
   },
 
+  pug: {
+    enable: true,
+    package: "egg-view-pug",
+  },
+
   passport: {
     enable: true,
     package: "egg-passport",
