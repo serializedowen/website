@@ -27,13 +27,9 @@ export default class EmailService extends Service {
         "1h"
       );
 
-      const html = await this.ctx.renderView(
-        "verifyEmail.pug",
-        {
-          url: `${this.ctx.origin}/auth/verify-email?SESSIONID=${jwt}`,
-        },
-        {}
-      );
+      const html = await this.ctx.renderView("verifyEmail.pug", {
+        url: `${this.ctx.origin}/auth/verify-email?SESSIONID=${jwt}`,
+      });
 
       return this.sendEmail({
         to: email,
@@ -56,7 +52,10 @@ export default class EmailService extends Service {
   }) {
     this.logger.info("sending email to " + to);
 
-    console.log({ to, text, subject, html });
+    this.logger.info(
+      `${this.app.config.emailServer.host}:${this.app.config.emailServer.port}/send`
+    );
+
     return this.app
       .curl(
         `${this.app.config.emailServer.host}:${this.app.config.emailServer.port}/send`,
@@ -71,7 +70,7 @@ export default class EmailService extends Service {
       )
       .then((response) => {
         if (response.status >= 400) return Promise.reject(response);
-        this.logger.info("sending email to " + to);
+        this.logger.info("sent email to " + to);
         return response;
       });
   }
