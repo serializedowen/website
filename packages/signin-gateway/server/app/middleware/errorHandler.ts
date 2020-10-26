@@ -5,9 +5,7 @@ module.exports = (options) => async (ctx: Context, next) => {
     await next();
   } catch (e) {
     if (process.env.NODE_ENV !== "production") throw e;
-
-    ctx.body = e;
-    ctx.status = 500;
-    ctx.body = { message: e.message, stack: e.stack };
+    ctx.status = e.status || 500;
+    ctx.body = { message: e.message };
   }
 };
