@@ -87,6 +87,13 @@ export default class AuthController extends Controller {
   }
 
   @Authenticated()
+  @Get("/linked-providers")
+  public async getLinkedSocialAccount() {
+    //@ts-ignore
+    return this.service.auth.findLinkedProviders(this.ctx.user?.userId);
+  }
+
+  @Authenticated()
   @Get("/verify-third-party-user")
   public async wireProviderCredential() {
     if (!this.ctx.user) return;

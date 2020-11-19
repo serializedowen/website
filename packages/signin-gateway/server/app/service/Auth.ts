@@ -16,12 +16,22 @@ export default class Auth extends Service {
     };
   }
 
+  public findLinkedProviders(userId: string) {
+    return this.ctx.model.ThirdPartyUserRecords.findAll({
+      where: {
+        userId,
+      },
+    });
+  }
+
   public verifyPassword(password: string, salt: string) {
     return crypto
       .createHmac("sha256", secret)
       .update(password.concat(salt))
       .digest("base64");
   }
+
+  public getProviderNames(userId: string) {}
 
   /**
    *
