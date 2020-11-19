@@ -17,7 +17,7 @@ import { pick } from "lodash";
 import UseGuard from "app/decorators/guards/UseGuard";
 import AdminAndSelfGuard from "app/decorators/guards/AdminAndSelfGuard";
 import { LooseModel } from "app";
-import { CreateUserDTO } from "app/model/dto/createUserDTO";
+import { CreateUserDTO } from "app/model/dto/CreateUserDTO";
 
 @Prefix("/auth")
 export default class AuthController extends Controller {
