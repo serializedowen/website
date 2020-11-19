@@ -47,7 +47,7 @@ export default class Auth extends Service {
 
     return await this.app.model.User.create({
       name: userData.name,
-      email: "rea" + Math.random() + ".com",
+      email: userData.email || "placeholder@example.com",
       avatarUrl: userData.avatarUrl,
       password,
       salt,

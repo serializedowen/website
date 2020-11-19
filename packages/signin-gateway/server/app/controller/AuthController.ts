@@ -17,6 +17,7 @@ import { pick } from "lodash";
 import UseGuard from "app/decorators/guards/UseGuard";
 import AdminAndSelfGuard from "app/decorators/guards/AdminAndSelfGuard";
 import { LooseModel } from "app";
+import { CreateUserDTO } from "app/model/dto/createUserDTO";
 
 @Prefix("/auth")
 export default class AuthController extends Controller {
@@ -31,6 +32,17 @@ export default class AuthController extends Controller {
       subject: "111",
       text: "111",
     });
+  }
+
+  @Post("/register")
+  public async register(@Body data: CreateUserDTO) {
+    await this.ctx.service.auth.createUser(data);
+  }
+
+  @Get("/availability/name")
+  public async checkNameAvailability(@Query("name") name: string) {
+    const model = await this.ctx.model.User.findOne({ where: { name } });
+    this.ctx.body = !!model;
   }
 
   @Get("/check")

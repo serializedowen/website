@@ -8,6 +8,7 @@ import ExportThirdPartyUserRecords from '../../../app/model/third_party_user_rec
 import ExportUser from '../../../app/model/user';
 import ExportUserLoginRecord from '../../../app/model/user_login_record';
 import ExportUserSecurityQuestion from '../../../app/model/user_security_question';
+import ExportDtoCreateUserDTO from '../../../app/model/dto/CreateUserDTO';
 import ExportDtoUserDTO from '../../../app/model/dto/UserDTO';
 import ExportDtoCommentDTO from '../../../app/model/dto/commentDTO';
 
@@ -20,6 +21,7 @@ declare module 'egg' {
     UserLoginRecord: ReturnType<typeof ExportUserLoginRecord>;
     UserSecurityQuestion: ReturnType<typeof ExportUserSecurityQuestion>;
     Dto: {
+      CreateUserDTO: ReturnType<typeof ExportDtoCreateUserDTO>;
       UserDTO: ReturnType<typeof ExportDtoUserDTO>;
       CommentDTO: ReturnType<typeof ExportDtoCommentDTO>;
     }
