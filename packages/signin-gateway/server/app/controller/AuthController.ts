@@ -89,8 +89,12 @@ export default class AuthController extends Controller {
   @Authenticated()
   @Get("/linked-providers")
   public async getLinkedSocialAccount() {
-    //@ts-ignore
-    return this.service.auth.findLinkedProviders(this.ctx.user?.userId);
+    const providers = await this.service.auth.findLinkedProviders(
+      //@ts-ignore
+      this.ctx.user?.userId
+    );
+
+    this.ctx.body = providers;
   }
 
   @Authenticated()
