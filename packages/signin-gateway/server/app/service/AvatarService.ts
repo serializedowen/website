@@ -3,17 +3,28 @@ import { EggFile } from "egg-multipart";
 import { cdnUrl } from "config-storage/qiniu";
 
 export default class AvatarService extends Service {
-  public async uploadAvatar(file: EggFile) {
+  public async uploadAvatar(filePath: string | Buffer) {
     const result: any = await new Promise((resolve, reject) => {
-      this.ctx.app.qiniu.formUploader.putFileWithoutKey(
-        this.ctx.app.qiniu.getUploadToken(),
-        file.filepath,
-        null,
-        (error, body, info) => {
-          if (error) reject(error);
-          else resolve(body);
-        }
-      );
+      if (filePath instanceof Buffer) {
+        this.app.qiniu.formUploader.putWithoutKey(
+          this.ctx.app.qiniu.getUploadToken(),
+          filePath,
+          null,
+          (error, body, info) => {
+            if (error) reject(error);
+            else resolve(body);
+          }
+        );
+      } else
+        this.ctx.app.qiniu.formUploader.putFileWithoutKey(
+          this.ctx.app.qiniu.getUploadToken(),
+          filePath,
+          null,
+          (error, body, info) => {
+            if (error) reject(error);
+            else resolve(body);
+          }
+        );
     });
 
     // this.app.runInBackground
@@ -22,6 +33,6 @@ export default class AvatarService extends Service {
       isCdnAvatar: true,
     });
 
-    this.ctx.body = cdnUrl + "/" + result.key;
+    return cdnUrl + "/" + result.key;
   }
 }

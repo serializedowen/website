@@ -28,7 +28,7 @@ export default class CommentController extends Controller {
   public async getComments(@Param("identifier") identifier: string) {
     this.ctx.body = await this.service.commentService.getComments(identifier);
 
-    this.ctx.status = 200;
+    this.ctx.status = 400;
   }
 
   @Authenticated()

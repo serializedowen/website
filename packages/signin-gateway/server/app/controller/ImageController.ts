@@ -1,5 +1,6 @@
 import { Controller } from "egg";
 import { Post, Prefix, Query } from "egg-shell-decorators-plus";
+
 import sharp from "sharp";
 // import qiniu from 'qiniu'
 
@@ -7,12 +8,11 @@ import sharp from "sharp";
 export default class ImageController extends Controller {
   @Post("/upload")
   public async upload(
-    @Query("x") x: String,
-    @Query("y") y: String,
-    @Query("width") width: String,
-    @Query("height") height: String
+    @Query("x") x: string,
+    @Query("y") y: string,
+    @Query("width") width: string,
+    @Query("height") height: string
   ) {
-    console.log(x, y, width, height);
     if (
       this.ctx.request.files.length === 0 ||
       this.ctx.request.files.length > 1
@@ -20,8 +20,22 @@ export default class ImageController extends Controller {
       this.ctx.throw(400);
     else {
       const img = this.ctx.request.files[0];
-      sharp(img.filepath);
-      await this.ctx.service.avatarService.uploadAvatar(img);
+
+      if (!!x && !!y && !!width && !!height) {
+        const file = await sharp(img.filepath)
+          .extract({
+            top: parseInt(y),
+            left: parseInt(x),
+            width: parseInt(width),
+            height: parseInt(height),
+          })
+          .toBuffer();
+
+        this.ctx.body = await this.ctx.service.avatarService.uploadAvatar(file);
+      } else
+        this.ctx.body = await this.ctx.service.avatarService.uploadAvatar(
+          img.filepath
+        );
     }
 
     // this.app.runInBackground()

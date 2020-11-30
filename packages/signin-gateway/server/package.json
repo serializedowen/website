@@ -27,6 +27,7 @@
     "@types/lru-cache": "^5.1.0",
     "@types/passport-local": "^1.0.33",
     "@types/uuid": "^8.3.0",
+    "bluebird": "^3.7.2",
     "class-validator": "^0.12.2",
     "cross-env": "^7.0.2",
     "egg": "^2.6.1",
