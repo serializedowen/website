@@ -189,7 +189,6 @@ export default class AuthController extends Controller {
   }
 
   @Get("/:userId")
-  @UseGuard(AdminAndSelfGuard)
   @Authenticated()
   public async getUserData(@Param("userId") userId: number) {
     const user = await this.ctx.service.auth.findUserByPK(Number(userId));
