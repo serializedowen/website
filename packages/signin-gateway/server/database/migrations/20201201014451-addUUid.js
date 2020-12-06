@@ -8,10 +8,9 @@ module.exports = {
      * Example:
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
-
-    await queryInterface.addColumn("users", "is_verified_email", {
-      type: Sequelize.BOOLEAN,
-      defaultValue: false,
+    await queryInterface.addColumn("users", "uuid", {
+      type: Sequelize.UUID,
+      defaultValue: Sequelize.UUIDV4,
       allowNull: false,
     });
   },
@@ -23,6 +22,7 @@ module.exports = {
      * Example:
      * await queryInterface.dropTable('users');
      */
-    await queryInterface.removeColumn("users", "is_verified_email");
+
+    await queryInterface.removeColumn("users", "uuid");
   },
 };
