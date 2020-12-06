@@ -1,6 +1,5 @@
 import { Context } from "egg";
 import activeUserCache from "app/activeUserCache";
-import { Model } from "sequelize";
 
 module.exports = () => async (ctx: Context, next) => {
   if (ctx.user && ctx.user.userId) {
@@ -20,5 +19,7 @@ module.exports = () => async (ctx: Context, next) => {
       }
     }
   }
+
+  ctx.service.auth.addLoginRecord();
   await next();
 };

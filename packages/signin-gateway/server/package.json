@@ -30,6 +30,7 @@
     "bluebird": "^3.7.2",
     "class-validator": "^0.12.2",
     "cross-env": "^7.0.2",
+    "dayjs": "^1.9.7",
     "egg": "^2.6.1",
     "egg-full-qiniu": "^1.1.6",
     "egg-multipart": "^2.10.3",

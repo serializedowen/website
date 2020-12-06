@@ -1,5 +1,7 @@
 import { Service } from "egg";
 import crypto = require("crypto");
+import { Op } from "sequelize";
+import dayjs from "dayjs";
 
 const secret =
   "4pzKckZH6JT4mQPXULEnL4AoRt4knDIvgRNfBkHjzxiRgtzFynaEB3NMFcd8jX/4izCde6SpBnxSn23UZL5tFA==";
@@ -26,7 +28,21 @@ export default class Auth extends Service {
 
   public async addLoginRecord() {
     //@ts-ignore
-    await this.ctx.user?.userModel.createUser_login_record();
+    const pre = await this.ctx.model.UserLoginRecord.findOne({
+      where: {
+        userId: this.ctx.user?.userId,
+        createdAt: {
+          [Op.between]: [
+            dayjs().hour(0).minute(0).second(0).millisecond(0).toDate(),
+            dayjs().toDate(),
+          ],
+        },
+      },
+    });
+
+    if (!pre)
+      //@ts-ignore
+      await this.ctx.user?.userModel.createUser_login_record();
   }
 
   public verifyPassword(password: string, salt: string) {
