@@ -10,12 +10,15 @@ const modelBuilder = (app: Application, model: IModel) => {
     TEXT,
     BOOLEAN,
     CHAR,
+    UUID,
+    UUIDV4,
   } = app.Sequelize;
 
   const User = model.define(
     "user",
     {
       id: { type: INTEGER, primaryKey: true, autoIncrement: true },
+      uuid: { type: UUID, defaultValue: UUIDV4, allowNull: false },
       name: { type: STRING(30), unique: true, allowNull: false },
       email: { type: STRING(100), allowNull: false },
       phone: { type: STRING, defaultValue: "" },

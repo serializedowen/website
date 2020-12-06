@@ -24,6 +24,11 @@ export default class Auth extends Service {
     });
   }
 
+  public async addLoginRecord() {
+    //@ts-ignore
+    await this.ctx.user?.userModel.createUser_login_record();
+  }
+
   public verifyPassword(password: string, salt: string) {
     return crypto
       .createHmac("sha256", secret)

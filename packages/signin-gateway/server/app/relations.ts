@@ -9,4 +9,7 @@ export default function addRelations(model: IModel) {
 
   model.Comment.hasMany(model.Like);
   model.Comment.belongsTo(model.User);
+
+  model.User.hasMany(model.UserLoginRecord);
+  model.UserLoginRecord.belongsTo(model.User);
 }
