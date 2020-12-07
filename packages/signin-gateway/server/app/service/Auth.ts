@@ -1,7 +1,6 @@
 import { Service } from "egg";
 import crypto = require("crypto");
 import { Op } from "sequelize";
-import dayjs from "dayjs";
 
 const secret =
   "4pzKckZH6JT4mQPXULEnL4AoRt4knDIvgRNfBkHjzxiRgtzFynaEB3NMFcd8jX/4izCde6SpBnxSn23UZL5tFA==";
@@ -26,7 +25,40 @@ export default class Auth extends Service {
     });
   }
 
+  public async getConsecutiveCheckInDays() {
+    const records = <{ createdAt: string }[]>(
+      (<unknown>await this.ctx.model.UserLoginRecord.findAll({
+        //@ts-ignore
+        where: { userId: this.ctx.user?.userId },
+        order: [["createdAt", "DESC"]],
+        raw: true,
+        attributes: ["createdAt"],
+      }))
+    );
+
+    const { dayjs } = this.app;
+
+    const dates = [dayjs().add(1, "day")].concat(
+      records.map((record) => dayjs(record.createdAt))
+    );
+
+    let count = 1;
+
+    for (let i = 0; i < dates.length - 1; i++) {
+      if (
+        dates[i].subtract(1, "day").format("DD/MM/YYYY") ===
+        dates[i + 1].format("DD/MM/YYYY")
+      ) {
+        count++;
+      } else break;
+    }
+
+    return count;
+  }
+
   public async addLoginRecord() {
+    const { dayjs } = this.app;
+
     //@ts-ignore
     const pre = await this.ctx.model.UserLoginRecord.findOne({
       where: {
@@ -53,11 +85,6 @@ export default class Auth extends Service {
   }
 
   public getProviderNames(userId: string) {}
-
-  /**
-   *
-   */
-  public recordLogin(userId: string) {}
 
   public async createProviderMetadata(record: thirdPartyUserRecordDAO) {
     return this.app.model.ThirdPartyUserRecords.create(record);

@@ -1,5 +1,8 @@
 import * as qiniu from "qiniu";
 import { AccessKey, SecretKey } from "config-storage/qiniu";
+import dayjs from "dayjs";
+import isToday from "dayjs/plugin/isToday";
+dayjs.extend(isToday);
 
 const config = new qiniu.conf.Config({
   zone: qiniu.zone.Zone_z2,
@@ -13,6 +16,7 @@ const putPolicy = new qiniu.rs.PutPolicy({
 });
 
 export default {
+  dayjs,
   qiniu: {
     getUploadToken: (fileKey?: string) => {
       if (fileKey) {

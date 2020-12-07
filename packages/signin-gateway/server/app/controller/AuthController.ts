@@ -80,6 +80,11 @@ export default class AuthController extends Controller {
     this.ctx.logout();
   }
 
+  @Get("/days")
+  public async getConsecutiveCheckInDays() {
+    this.ctx.body = await this.ctx.service.auth.getConsecutiveCheckInDays();
+  }
+
   @Post("/signup")
   public async signup() {
     const user = await this.ctx.service.auth.createUser(this.ctx.request.body);
