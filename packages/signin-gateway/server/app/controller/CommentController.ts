@@ -46,4 +46,13 @@ export default class CommentController extends Controller {
   ) {
     await this.service.commentService.likeComment(commentId, identifier);
   }
+
+  @Delete("/:identifier/:commentId/like")
+  @Authenticated()
+  public async unlikeComment(
+    @Param("identifier") identifier: string,
+    @Param("commentId") commentId: string
+  ) {
+    await this.service.commentService.unlikeComment(commentId, identifier);
+  }
 }

@@ -18,7 +18,7 @@ export default class CommentService extends Service {
     ).findAll({
       where: { identifier },
       order: [["createdAt", "DESC"]],
-      include: [{ model: this.ctx.model.Like, attributes: ["id"] }],
+      include: [{ model: this.ctx.model.Like, attributes: ["id", "userId"] }],
     });
 
     return comments;
@@ -36,7 +36,8 @@ export default class CommentService extends Service {
       where: { commentId, userId: String(this.ctx.user?.userId) },
     });
     //@ts-ignore
-    this.ctx.user.removeLike(like);
+    this.ctx.user.userModel.removeLike(like);
+    like?.destroy();
   }
 
   public async likeComment(commentId: string, identifier: string) {
