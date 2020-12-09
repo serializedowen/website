@@ -2,6 +2,7 @@
 // Do not modify this file!!!!!!!!!
 
 import 'egg';
+import ExportBookmarks from '../../../app/model/bookmarks';
 import ExportComment from '../../../app/model/comment';
 import ExportLike from '../../../app/model/like';
 import ExportThirdPartyUserRecords from '../../../app/model/third_party_user_records';
@@ -14,6 +15,7 @@ import ExportDtoCommentDTO from '../../../app/model/dto/commentDTO';
 
 declare module 'egg' {
   interface IModel {
+    Bookmarks: ReturnType<typeof ExportBookmarks>;
     Comment: ReturnType<typeof ExportComment>;
     Like: ReturnType<typeof ExportLike>;
     ThirdPartyUserRecords: ReturnType<typeof ExportThirdPartyUserRecords>;

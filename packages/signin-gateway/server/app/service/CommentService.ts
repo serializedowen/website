@@ -40,9 +40,15 @@ export default class CommentService extends Service {
   }
 
   public async likeComment(commentId: string, identifier: string) {
+    const comment = await this.ctx.model.Comment.findByPk(commentId);
+
+    // //@ts-ignore
+    // const a = await comment.hasLike({:
+    //   where: { userId: this.ctx.user?.userId },
+    // });
+
     //@ts-ignore
     const like = await this.ctx.user?.userModel.createLike({});
-    const comment = await this.ctx.model.Comment.findByPk(commentId);
 
     //@ts-ignore
     comment.addLike(like);
