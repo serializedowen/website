@@ -1,3 +1,6 @@
 [submodule "egg-shell-decorators"]
 	path = egg-shell-decorators
 	url = git@github.com:serializedowen/egg-shell-decorators.git
+[submodule "config-storage"]
+	path = config-storage
+	url = git@github.com:serializedowen/config-storage.git
