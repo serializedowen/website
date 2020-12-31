@@ -10,6 +10,7 @@ import ExportAuth from '../../../app/service/Auth';
 import ExportAvatarService from '../../../app/service/AvatarService';
 import ExportCommentService from '../../../app/service/CommentService';
 import ExportEmailService from '../../../app/service/EmailService';
+import ExportMarkdownService from '../../../app/service/MarkdownService';
 import ExportTest from '../../../app/service/Test';
 import ExportJwt from '../../../app/service/jwt';
 
@@ -19,6 +20,7 @@ declare module 'egg' {
     avatarService: AutoInstanceType<typeof ExportAvatarService>;
     commentService: AutoInstanceType<typeof ExportCommentService>;
     emailService: AutoInstanceType<typeof ExportEmailService>;
+    markdownService: AutoInstanceType<typeof ExportMarkdownService>;
     test: AutoInstanceType<typeof ExportTest>;
     jwt: AutoInstanceType<typeof ExportJwt>;
   }

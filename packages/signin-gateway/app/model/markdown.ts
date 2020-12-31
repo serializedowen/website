@@ -3,9 +3,9 @@ import { Application, IModel } from 'egg';
 import { ModelCtor, Model } from 'sequelize';
 
 const modelBuilder = (app: Application, model: IModel) => {
-  const { INTEGER, DATE, UUID, UUIDV4 } = app.Sequelize;
+  const { INTEGER, DATE, UUID, UUIDV4, STRING } = app.Sequelize;
 
-  const Like = model.define('like', {
+  const Markdown = model.define('markdown', {
     id: {
       type: UUID,
       primaryKey: true,
@@ -18,17 +18,15 @@ const modelBuilder = (app: Application, model: IModel) => {
       onDelete: 'CASCADE',
     },
 
-    commentId: {
-      type: INTEGER,
-      references: { model: 'comments', key: 'id' },
-      onDelete: 'CASCADE',
+    content: {
+      type: STRING,
     },
 
     createdAt: DATE,
     updatedAt: DATE,
   });
 
-  return Like as ModelCtor<Model>;
+  return Markdown as ModelCtor<Model>;
 };
 
 export default modelBuilder;

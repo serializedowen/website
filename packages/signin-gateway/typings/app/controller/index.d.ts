@@ -6,6 +6,7 @@ import ExportAuthController from '../../../app/controller/AuthController';
 import ExportCommentController from '../../../app/controller/CommentController';
 import ExportHomeController from '../../../app/controller/HomeController';
 import ExportImageController from '../../../app/controller/ImageController';
+import ExportMarkdownController from '../../../app/controller/MarkdownController';
 
 declare module 'egg' {
   interface IController {
@@ -13,5 +14,6 @@ declare module 'egg' {
     commentController: ExportCommentController;
     homeController: ExportHomeController;
     imageController: ExportImageController;
+    markdownController: ExportMarkdownController;
   }
 }

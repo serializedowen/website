@@ -1,4 +1,4 @@
-import { IModel } from "egg";
+import { IModel } from 'egg';
 
 export default function addRelations(model: IModel) {
   model.Like.belongsTo(model.User);
@@ -12,4 +12,7 @@ export default function addRelations(model: IModel) {
 
   model.User.hasMany(model.UserLoginRecord);
   model.UserLoginRecord.belongsTo(model.User);
+
+  model.User.hasMany(model.Markdown);
+  model.Markdown.belongsTo(model.User);
 }

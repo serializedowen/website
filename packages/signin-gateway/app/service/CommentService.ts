@@ -1,5 +1,5 @@
-import { commentDTO } from "app/model/dto/commentDTO";
-import { Service } from "egg";
+import { commentDTO } from 'app/model/dto/commentDTO';
+import { Service } from 'egg';
 
 export default class CommentService extends Service {
   public async addComment(data: commentDTO & { identifier: string }) {
@@ -14,11 +14,11 @@ export default class CommentService extends Service {
 
   public async getComments(identifier: string) {
     const comments = await this.ctx.model.Comment.scope(
-      "includeUserData"
+      'includeUserData'
     ).findAll({
       where: { identifier },
-      order: [["createdAt", "DESC"]],
-      include: [{ model: this.ctx.model.Like, attributes: ["id", "userId"] }],
+      order: [['createdAt', 'DESC']],
+      include: [{ model: this.ctx.model.Like, attributes: ['id', 'userId'] }],
     });
 
     return comments;
