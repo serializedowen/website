@@ -33,6 +33,7 @@
     "app/views",
     "node_modules*",
     "database",
-    "coverage"
+    "coverage",
+    "egg-shell-decorators"
   ]
 }
