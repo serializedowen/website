@@ -1,6 +1,6 @@
-import { Service } from "egg";
-import { EggFile } from "egg-multipart";
-import { cdnUrl } from "config-storage/qiniu";
+import { Service } from 'egg';
+import { EggFile } from 'egg-multipart';
+import { cdnUrl } from 'config-storage/qiniu';
 
 export default class AvatarService extends Service {
   public async uploadAvatar(filePath: string | Buffer) {
@@ -29,10 +29,10 @@ export default class AvatarService extends Service {
 
     // this.app.runInBackground
     await this.ctx.user?.userModel.update({
-      avatarUrl: cdnUrl + "/" + result.key,
+      avatarUrl: cdnUrl + '/' + result.key,
       isCdnAvatar: true,
     });
 
-    return cdnUrl + "/" + result.key;
+    return cdnUrl + '/' + result.key;
   }
 }
