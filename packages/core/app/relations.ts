@@ -18,10 +18,12 @@ export default function addRelations(model: IModel) {
 
   model.Markdown.belongsToMany(model.User, {
     through: model.MarkdownCollaborators,
+    as: 'collaborators',
   });
 
   model.User.belongsToMany(model.Markdown, {
     through: model.MarkdownCollaborators,
+    as: 'collaborators',
   });
 
   model.User.hasMany(model.MarkdownCollaborators);

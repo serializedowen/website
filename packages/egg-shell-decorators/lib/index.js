@@ -1,9 +1,9 @@
-"use strict";
+'use strict';
 
-require("reflect-metadata");
-const { filter } = require("lodash");
-const ControllerHandler = require("./handler/controller-handler");
-const MethodHandler = require("./handler/method-handler");
+require('reflect-metadata');
+const { filter } = require('lodash');
+const ControllerHandler = require('./handler/controller-handler');
+const MethodHandler = require('./handler/method-handler');
 
 const {
   PARAM_INFO,
@@ -11,13 +11,13 @@ const {
   QUERY,
   HEADER,
   PARAM,
-} = require("./decorators/symbols");
+} = require('./decorators/symbols');
 
 const ctMap = new Map();
 const ctHandler = new ControllerHandler();
 const methodHandler = new MethodHandler(ctMap);
-const { validateSync } = require("class-validator");
-const { plainToClass } = require("class-transformer");
+const { validateSync } = require('class-validator');
+const { plainToClass } = require('class-transformer');
 
 const EggShell = (app) => {
   const { router } = app;
@@ -27,21 +27,21 @@ const EggShell = (app) => {
     let { prefix } = ctHandler.getMetada(c.constructor);
     const propertyNames = filter(Object.getOwnPropertyNames(c), (pName) => {
       return (
-        pName !== "constructor" && pName !== "pathName" && pName !== "fullPath"
+        pName !== 'constructor' && pName !== 'pathName' && pName !== 'fullPath'
       );
     });
 
     // 解析前缀
     const fullPath = c.fullPath
-      .split("\\")
-      .join("/")
-      .replace(/[\/]{2,9}/g, "/")
-      .replace(/(\.ts)|(\.js)/g, "");
-    const rootPath = "controller/";
+      .split('\\')
+      .join('/')
+      .replace(/[\/]{2,9}/g, '/')
+      .replace(/(\.ts)|(\.js)/g, '');
+    const rootPath = 'controller/';
     prefix =
       prefix ||
       fullPath.substring(fullPath.indexOf(rootPath) + rootPath.length);
-    prefix = prefix.startsWith("/") ? prefix : "/" + prefix;
+    prefix = prefix.startsWith('/') ? prefix : '/' + prefix;
 
     for (const pName of propertyNames) {
       // 解析函数元数据
@@ -58,13 +58,13 @@ const EggShell = (app) => {
           ctx.status === 404 && (ctx.status = 200);
 
           const params = Reflect.getMetadata(PARAM_INFO, instance, pName) || [];
-          const preprocessor = Reflect.getMetadata(
-            "preProcessor",
+          const preprocessors = Reflect.getMetadata(
+            'preProcessor',
             instance[pName]
           );
 
-          if (preprocessor) {
-            preprocessor.call(instance);
+          if (preprocessors) {
+            preprocessors.map((func) => func.call(instance));
           }
 
           return await instance[pName].apply(
@@ -108,10 +108,10 @@ const EggShell = (app) => {
 module.exports = {
   EggShell,
 
-  Body: require("./decorators/Body"),
-  Query: require("./decorators/Query"),
-  Header: require("./decorators/Header"),
-  Param: require("./decorators/Param"),
+  Body: require('./decorators/Body'),
+  Query: require('./decorators/Query'),
+  Header: require('./decorators/Header'),
+  Param: require('./decorators/Param'),
 
   Get: methodHandler.get(),
   Post: methodHandler.post(),

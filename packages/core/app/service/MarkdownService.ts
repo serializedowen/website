@@ -28,40 +28,33 @@ export default class MarkdownService extends Service {
   public async getVisibleMarkdowns() {
     const findOptions: FindOptions = {
       where: {
-        [Op.or]: {
-          visibility: 'public',
-        },
+        [Op.or]: [
+          {
+            visibility: 'public',
+          },
+        ],
       },
       include: [
         {
-          model: this.ctx.model.MarkdownCollaborators,
-          // include: [
-          //   {
-          //     model: this.ctx.model.User,
-          //     attributes: ['id', 'name', 'avatarUrl'],
-          //   },
-          // ],
+          association: 'collaborators',
+          required: false,
+          attributes: ['id', 'name', 'avatarUrl'],
         },
         { model: this.ctx.model.User, attributes: ['id', 'name', 'avatarUrl'] },
-        // {
-        //   model: this.ctx.model.User,
-        //   as: 'collaborators',
-        //   association: 'MarkdownCollaborators',
-        // },
       ],
     };
 
     if (this.ctx.user?.userId) {
       console.log(this.ctx.user.userId);
       //@ts-ignore
-      findOptions.where.userId = this.ctx.user?.userModel.id;
+      findOptions.where[Op.or].push({ userId: this.ctx.user?.userModel.id });
     }
 
     const mds = await this.ctx.model.Markdown.findAll(findOptions);
 
     // await mds.forEach((md) =>
     //   //@ts-ignore
-    //   md.addMarkdownCollaborator(this.ctx.user?.userModel)
+    //   md.addCollaborator(13)
     // );
     return mds;
   }
