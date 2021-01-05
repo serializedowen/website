@@ -1,5 +1,5 @@
-import { Application, IModel } from "egg";
-import { ModelCtor, Model } from "sequelize";
+import { Application, IModel } from 'egg';
+import { ModelCtor, Model } from 'sequelize';
 const modelBuilder = (app: Application, model: IModel) => {
   const {
     STRING,
@@ -15,13 +15,13 @@ const modelBuilder = (app: Application, model: IModel) => {
   } = app.Sequelize;
 
   const User = model.define(
-    "user",
+    'User',
     {
       id: { type: INTEGER, primaryKey: true, autoIncrement: true },
       uuid: { type: UUID, defaultValue: UUIDV4, allowNull: false },
       name: { type: STRING(30), unique: true, allowNull: false },
       email: { type: STRING(100), allowNull: false },
-      phone: { type: STRING, defaultValue: "" },
+      phone: { type: STRING, defaultValue: '' },
       password: { type: STRING(200), allowNull: false },
       age: INTEGER,
       salt: { type: CHAR(12), allowNull: false },
@@ -29,14 +29,14 @@ const modelBuilder = (app: Application, model: IModel) => {
       updatedAt: DATE,
       avatarBlob: BLOB,
       avatarUrl: TEXT,
-      privilege: { type: ENUM("normal", "admin"), defaultValue: "normal" },
+      privilege: { type: ENUM('normal', 'admin'), defaultValue: 'normal' },
       isActive: { type: BOOLEAN, defaultValue: true },
       isCdnAvatar: { type: BOOLEAN, defaultValue: false, allowNull: false },
       isVerifiedEmail: { type: BOOLEAN, defaultValue: false, allowNull: false },
     },
     {
       defaultScope: {
-        attributes: { exclude: ["password", "salt", "privilege", "isActive"] },
+        attributes: { exclude: ['password', 'salt', 'privilege', 'isActive'] },
         where: {
           isActive: true,
         },

@@ -3,9 +3,9 @@ import { Application, IModel } from 'egg';
 import { ModelCtor, Model } from 'sequelize';
 
 const modelBuilder = (app: Application, model: IModel) => {
-  const { INTEGER, DATE, UUID, UUIDV4, STRING } = app.Sequelize;
+  const { INTEGER, DATE, UUID, UUIDV4, STRING, ENUM } = app.Sequelize;
 
-  const Markdown = model.define('markdown', {
+  const Markdown = model.define('Markdown', {
     id: {
       type: UUID,
       primaryKey: true,
@@ -20,6 +20,15 @@ const modelBuilder = (app: Application, model: IModel) => {
 
     content: {
       type: STRING,
+    },
+
+    title: {
+      type: STRING,
+    },
+
+    visibility: {
+      type: ENUM('public', 'private'),
+      defaultValue: 'public',
     },
 
     createdAt: DATE,

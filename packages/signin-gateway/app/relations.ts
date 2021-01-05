@@ -15,4 +15,24 @@ export default function addRelations(model: IModel) {
 
   model.User.hasMany(model.Markdown);
   model.Markdown.belongsTo(model.User);
+
+  model.Markdown.belongsToMany(model.User, {
+    through: model.MarkdownCollaborators,
+  });
+
+  model.User.belongsToMany(model.Markdown, {
+    through: model.MarkdownCollaborators,
+  });
+
+  model.User.hasMany(model.MarkdownCollaborators);
+
+  model.Markdown.hasMany(model.MarkdownCollaborators);
+  model.MarkdownCollaborators.belongsTo(model.Markdown);
+  model.MarkdownCollaborators.belongsTo(model.User);
+
+  // model.Markdown.hasMany(model.MarkdownCollaborators);
+  // model.MarkdownCollaborators.belongsTo(model.Markdown);
+
+  // model.User.hasMany(model.MarkdownCollaborators);
+  // model.MarkdownCollaborators.belongsTo(model.User);
 }

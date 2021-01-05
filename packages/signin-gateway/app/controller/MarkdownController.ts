@@ -16,6 +16,12 @@ export default class MarkdownController extends Controller {
     else this.ctx.status = 404;
   }
 
+  @Get('')
+  @OpenAPI()
+  public async getVisibleMarkdowns() {
+    this.ctx.body = await this.service.markdownService.getVisibleMarkdowns();
+  }
+
   @Post('/add')
   @Authenticated()
   public async addMarkdown(@Body body: MarkdownDTO) {

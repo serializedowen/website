@@ -31,7 +31,7 @@ export default class CommentService extends Service {
     });
   }
 
-  public async unlikeComment(commentId: string, identifier: string) {
+  public async unlikeComment(commentId: string) {
     const like = await this.ctx.model.Like.findOne({
       where: { commentId, userId: String(this.ctx.user?.userId) },
     });
@@ -40,7 +40,7 @@ export default class CommentService extends Service {
     like?.destroy();
   }
 
-  public async likeComment(commentId: string, identifier: string) {
+  public async likeComment(commentId: string) {
     const comment = await this.ctx.model.Comment.findByPk(commentId);
 
     // //@ts-ignore

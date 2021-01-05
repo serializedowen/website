@@ -5,7 +5,7 @@ import { ModelCtor, Model } from 'sequelize';
 const modelBuilder = (app: Application, model: IModel) => {
   const { INTEGER, DATE, UUID, UUIDV4 } = app.Sequelize;
 
-  const Like = model.define('like', {
+  const Like = model.define('Like', {
     id: {
       type: UUID,
       primaryKey: true,

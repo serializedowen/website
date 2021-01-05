@@ -1,10 +1,10 @@
-import { Application, IModel } from "egg";
-import { v4 as uuid } from "uuid";
-import { ModelCtor, Model } from "sequelize";
+import { Application, IModel } from 'egg';
+import { v4 as uuid } from 'uuid';
+import { ModelCtor, Model } from 'sequelize';
 
 const modelBuilder = (app: Application, model: IModel) => {
   const { STRING, INTEGER, DATE, TEXT, UUID, UUIDV4 } = app.Sequelize;
-  const Comment = model.define("comment", {
+  const Comment = model.define('Comment', {
     id: {
       type: INTEGER,
       autoIncrement: true,
@@ -12,8 +12,8 @@ const modelBuilder = (app: Application, model: IModel) => {
     },
     userId: {
       type: INTEGER,
-      references: { model: "users", key: "id" },
-      onDelete: "CASCADE",
+      references: { model: 'users', key: 'id' },
+      onDelete: 'CASCADE',
     },
     content: {
       type: TEXT,
