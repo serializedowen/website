@@ -1,98 +1,92 @@
-import { Controller } from "egg";
+import { Controller } from 'egg';
 import {
   Prefix,
   Get,
   Post,
   Body,
   Query,
-  Header,
   Param,
-  Guard,
-} from "egg-shell-decorators-plus";
-import { UserDTO } from "app/model/dto/UserDTO";
-import activeUserCache from "app/activeUserCache";
-import Authenticated from "app/decorators/Authenticated";
-import { pick } from "lodash";
+} from '@serializedowen/egg-shell-decorator';
+import { UserDTO } from 'app/model/dto/UserDTO';
+import activeUserCache from 'app/activeUserCache';
+import Authenticated from 'app/decorators/Authenticated';
+import { pick } from 'lodash';
 
-import UseGuard from "app/decorators/guards/UseGuard";
-import AdminAndSelfGuard from "app/decorators/guards/AdminAndSelfGuard";
-import { LooseModel } from "app";
-import { CreateUserDTO } from "app/model/dto/CreateUserDTO";
+import UseGuard from 'app/decorators/guards/UseGuard';
+import AdminAndSelfGuard from 'app/decorators/guards/AdminAndSelfGuard';
+import { LooseModel } from 'app';
+import { CreateUserDTO } from 'app/model/dto/CreateUserDTO';
 
-@Prefix("/auth")
+@Prefix('/auth')
 export default class AuthController extends Controller {
-  constructor(props) {
-    super(props);
-  }
-
-  @Get("/password/reset")
+  @Get('/password/reset')
   public async passwordReset() {
     this.ctx.service.emailService.sendEmail({
-      to: "serializedowen@163.com",
-      subject: "111",
-      text: "111",
+      to: 'serializedowen@163.com',
+      subject: '111',
+      text: '111',
     });
   }
 
-  @Post("/register")
+  @Post('/register')
   public async register(@Body data: CreateUserDTO) {
     await this.ctx.service.auth.createUser(data);
   }
 
-  @Get("/availability/name")
-  public async checkNameAvailability(@Query("name") name: string) {
+  @Get('/availability/name')
+  public async checkNameAvailability(@Query('name') name: string) {
     const model = await this.ctx.model.User.findOne({ where: { name } });
     this.ctx.body = !!model;
   }
 
-  @Get("/check")
+  @Get('/check')
   public async check() {
     if (this.ctx.isAuthenticated()) this.ctx.status = 200;
     else this.ctx.status = 401;
   }
 
-  @Get("/verify-email")
+  @Get('/verify-email')
   @Authenticated()
-  public async verifyEmail(@Query("SESSIONID") session: string) {
+  public async verifyEmail(@Query('SESSIONID') session: string) {
     if (session) {
       try {
         const data = this.service.jwt.decode(session);
         await this.service.emailService.updateUserEmailStatus(data.userId);
-        await this.ctx.render("redirecting.pug", { url: data.redirect });
+        await this.ctx.render('redirecting.pug', { url: data.redirect });
       } catch (e) {
         this.logger.error(e);
-        this.ctx.throw(400, "SESSIONID错误或已过期");
+        this.ctx.throw(400, 'SESSIONID错误或已过期');
       }
     } else {
       const res = await this.service.emailService.verifyUserEmail();
-      if (res.status !== 200) this.ctx.throw(500, "email发送遇到未知错误");
+      if (res.status !== 200) this.ctx.throw(500, 'email发送遇到未知错误');
     }
   }
 
-  @Get("/decodeToken")
+  @Get('/decodeToken')
   @Authenticated(400)
   public decodeToken() {
     this.ctx.body = this.ctx.user;
   }
 
-  @Get("/signout")
+  @Get('/signout')
   public async signout() {
     this.ctx.logout();
   }
 
-  @Get("/days")
+  @Get('/days')
   public async getConsecutiveCheckInDays() {
     this.ctx.body = await this.ctx.service.auth.getConsecutiveCheckInDays();
   }
 
-  @Post("/signup")
+  @Post('/signup')
   public async signup() {
     const user = await this.ctx.service.auth.createUser(this.ctx.request.body);
     this.ctx.body = this.service.jwt.encode(user);
   }
 
   @Authenticated()
-  @Get("/linked-providers")
+  @Get('/linked-providers')
   public async getLinkedSocialAccount() {
     const providers = await this.service.auth.findLinkedProviders(
       //@ts-ignore
@@ -103,7 +97,7 @@ export default class AuthController extends Controller {
   }
 
   @Authenticated()
-  @Get("/verify-third-party-user")
+  @Get('/verify-third-party-user')
   public async wireProviderCredential() {
     if (!this.ctx.user) return;
 
@@ -112,7 +106,7 @@ export default class AuthController extends Controller {
     this.ctx.status = 200;
 
     switch (thirdPartyData.provider) {
-      case "local": {
+      case 'local': {
         try {
           const user = <LooseModel>await this.app.model.User.unscoped().findOne(
             {
@@ -141,12 +135,12 @@ export default class AuthController extends Controller {
           throw e;
         }
       }
-      case "github": {
+      case 'github': {
         const params: Partial<userDAO> = {};
 
         params.avatarUrl = thirdPartyData.photo;
         params.name = thirdPartyData.name;
-        params.password = "123456";
+        params.password = '123456';
 
         const record = <LooseModel>(
           await this.service.auth.findLinkedLocalAccountId(
@@ -186,31 +180,31 @@ export default class AuthController extends Controller {
       default:
     }
 
-    const redirectUrl = this.ctx.cookies.get("redirect", { encrypt: true });
+    const redirectUrl = this.ctx.cookies.get('redirect', { encrypt: true });
     if (redirectUrl) {
-      this.ctx.cookies.set("redirect", null);
+      this.ctx.cookies.set('redirect', null);
       this.ctx.redirect(redirectUrl);
     }
   }
 
-  @Get("/:userId")
+  @Get('/:userId')
   @Authenticated()
-  public async getUserData(@Param("userId") userId: number) {
+  public async getUserData(@Param('userId') userId: number) {
     const user = await this.ctx.service.auth.findUserByPK(Number(userId));
 
     if (user) this.ctx.body = user;
     else this.ctx.status = 404;
   }
 
-  @Post("/:userId/update")
+  @Post('/:userId/update')
   @UseGuard(AdminAndSelfGuard)
   @Authenticated()
   public async updateUserInfo(
-    @Param("userId") userId: string,
+    @Param('userId') userId: string,
     @Body updated: UserDTO
   ) {
     const m = await this.ctx.user?.userModel.update(
-      pick(updated, ["phone", "age", "name", "email"])
+      pick(updated, ['phone', 'age', 'name', 'email'])
     );
   }
 }

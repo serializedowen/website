@@ -1,0 +1,3 @@
+[submodule "packages/config-storage"]
+	path = packages/config-storage
+	url = git@github.com:serializedowen/config-storage.git

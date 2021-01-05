@@ -6,7 +6,7 @@ import {
   Body,
   Param,
   Delete,
-} from 'egg-shell-decorators-plus';
+} from '@serializedowen/egg-shell-decorator';
 
 import Authenticated from 'app/decorators/Authenticated';
 import { commentDTO } from 'app/model/dto/commentDTO';

@@ -23,7 +23,8 @@
     "typescript": "^3.0.0"
   },
   "dependencies": {
-    "@serializedowen/core": "file:packages/signin-gateway",
-    "@serializedowen/egg-shell-decorator": "file:packages/egg-shell-decorators"
+    "@serializedowen/core": "file:packages/core",
+    "@serializedowen/egg-shell-decorator": "file:packages/egg-shell-decorators",
+    "config-storage": "file:packages/config-storage"
   }
 }

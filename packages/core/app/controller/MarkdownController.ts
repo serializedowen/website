@@ -1,5 +1,11 @@
 import { Controller } from 'egg';
-import { Prefix, Get, Post, Param, Body } from 'egg-shell-decorators-plus';
+import {
+  Prefix,
+  Get,
+  Post,
+  Param,
+  Body,
+} from '@serializedowen/egg-shell-decorator';
 import Authenticated from 'app/decorators/Authenticated';
 import OpenAPI from 'app/decorators/OpenAPI';
 

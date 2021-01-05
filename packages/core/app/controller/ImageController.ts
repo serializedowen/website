@@ -1,17 +1,14 @@
-import { Controller } from "egg";
-import { Post, Prefix, Query } from "egg-shell-decorators-plus";
-
-import sharp from "sharp";
-// import qiniu from 'qiniu'
-
-@Prefix("/image")
+import { Controller } from 'egg';
+import { Post, Prefix, Query } from '@serializedowen/egg-shell-decorator';
+import sharp from 'sharp';
+@Prefix('/image')
 export default class ImageController extends Controller {
-  @Post("/upload")
+  @Post('/upload')
   public async upload(
-    @Query("x") x: string,
-    @Query("y") y: string,
-    @Query("width") width: string,
-    @Query("height") height: string
+    @Query('x') x: string,
+    @Query('y') y: string,
+    @Query('width') width: string,
+    @Query('height') height: string
   ) {
     if (
       this.ctx.request.files.length === 0 ||

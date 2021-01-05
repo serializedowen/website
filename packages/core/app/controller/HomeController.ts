@@ -1,14 +1,12 @@
-import AdminOnlyGuard from "app/decorators/guards/AdminAndSelfGuard";
-import UseGuard from "app/decorators/guards/UseGuard";
-import { Controller } from "egg";
-import { Get, Prefix } from "egg-shell-decorators-plus";
+import { Controller } from 'egg';
+import { Get, Prefix } from '@serializedowen/egg-shell-decorator';
 
-@Prefix("/")
+@Prefix('/')
 export default class HomeController extends Controller {
-  @Get("/")
+  @Get('/')
   public async index() {
     const { ctx } = this;
 
-    ctx.body = await ctx.service.test.sayHi("egg");
+    ctx.body = await ctx.service.test.sayHi('egg');
   }
 }
