@@ -3,7 +3,7 @@ import { ModelCtor, Model } from 'sequelize';
 const modelBuilder = (app: Application, model: IModel) => {
   const { INTEGER, DATE, UUID, UUIDV4 } = app.Sequelize;
 
-  const UserLoginRecord = app.model.define('Bookmark', {
+  const UserLoginRecord = app.model.define('UserLoginRecord', {
     id: {
       type: UUID,
       primaryKey: true,
