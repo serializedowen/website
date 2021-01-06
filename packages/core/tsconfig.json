@@ -24,7 +24,6 @@
     "importHelpers": true,
     "paths": {
       "config/*": ["config/*"],
-      "config-storage/*": ["config-storage/*"]
     },
     "baseUrl": "."
   },

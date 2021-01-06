@@ -8,6 +8,7 @@
     "comma-dangle": "off",
     "array-bracket-spacing":"off",
     "arrow-parens":"off",
+    "curly":"off",
     "spaced-comment":"off",
     "@typescript-eslint/ban-ts-comment": "off",
     "@typescript-eslint/indent": "off"

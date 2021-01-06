@@ -1,5 +1,4 @@
 import { Service } from 'egg';
-import { EggFile } from 'egg-multipart';
 import { cdnUrl } from 'config-storage/qiniu';
 
 export default class AvatarService extends Service {
