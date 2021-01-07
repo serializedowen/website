@@ -1,6 +1,10 @@
 {
-  "packages": ["packages/*"],
+  "packages": [
+    "packages/*"
+  ],
   "npmClient": "npm",
-  "npmClientArgs": ["--registry https://registry.npm.taobao.org"],
-  "version": "0.0.0"
+  "npmClientArgs": [
+    "--registry https://registry.npm.taobao.org"
+  ],
+  "version": "0.2.0"
 }

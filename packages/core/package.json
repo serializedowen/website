@@ -1,7 +1,10 @@
 {
   "name": "@serializedowen/core",
-  "version": "1.0.0",
+  "version": "0.2.0",
   "description": "",
+  "publishConfig": {
+    "access": "public"
+  },
   "private": true,
   "egg": {
     "typescript": true,
