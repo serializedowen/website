@@ -25,6 +25,7 @@
   "dependencies": {
     "@serializedowen/core": "file:packages/core",
     "@serializedowen/egg-shell-decorator": "file:packages/egg-shell-decorators",
+    "@serializedowen/enums": "file:packages/enums",
     "config-storage": "file:packages/config-storage"
   }
 }
