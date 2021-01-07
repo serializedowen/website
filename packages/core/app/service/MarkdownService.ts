@@ -1,26 +1,26 @@
+import { MarkdownVisibility } from '@serializedowen/enums/types';
+import { MarkdownDTO } from 'app/model/dto/MarkdownDTO';
 import { Service } from 'egg';
 import { Op, FindOptions } from 'sequelize';
 export default class MarkdownService extends Service {
-  public async addMarkdown(content: string) {
+  public async addMarkdown(markdown: MarkdownDTO) {
     //@ts-ignore
-    const md = await this.ctx.user?.userModel.createMarkdown({
-      content,
+    const model = await this.ctx.user?.userModel.createMarkdown({
+      content: markdown.content,
+      visibility: markdown.visibility || MarkdownVisibility.PRIVATE,
     });
 
-    this.ctx.user?.userModel.save();
-
-    return md;
+    return model;
   }
 
-  public async updateMarkdown(content: string, id: string) {
-    console.log(this.ctx.user?.userModel);
-
+  public async updateMarkdown(markdown: MarkdownDTO, id: string) {
     //@ts-ignore
     const mds = await this.ctx.user?.userModel.getMarkdowns({ where: { id } });
 
     if (!mds[0]) return false;
 
-    mds[0].content = content;
+    mds[0].content = markdown.content;
+    mds[0].visibility = markdown.visibility || MarkdownVisibility.PRIVATE;
     mds[0].save();
     return true;
   }

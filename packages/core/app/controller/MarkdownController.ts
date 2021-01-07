@@ -46,6 +46,8 @@ export default class MarkdownController extends Controller {
       identifier
     );
 
+    console.log(body.visibility);
+
     if (!flag) this.ctx.status = 500;
   }
 }
