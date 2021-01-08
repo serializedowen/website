@@ -1,4 +1,4 @@
-import { MarkdownVisibility } from '@serializedowen/enums/types';
+import { MarkdownVisibility } from '@serializedowen/enums';
 import { MarkdownDTO } from 'app/model/dto/MarkdownDTO';
 import { Service } from 'egg';
 import { Op, FindOptions } from 'sequelize';
