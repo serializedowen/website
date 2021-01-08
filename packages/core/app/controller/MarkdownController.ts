@@ -31,7 +31,7 @@ export default class MarkdownController extends Controller {
   @Post('/add')
   @Authenticated()
   public async addMarkdown(@Body body: MarkdownDTO) {
-    const md = await this.service.markdownService.addMarkdown(body.content);
+    const md = await this.service.markdownService.addMarkdown(body);
     this.ctx.body = md.id;
   }
 
@@ -41,10 +41,7 @@ export default class MarkdownController extends Controller {
     @Param('identifier') identifier: string,
     @Body body: MarkdownDTO
   ) {
-    const flag = this.service.markdownService.updateMarkdown(
-      body.content,
-      identifier
-    );
+    const flag = this.service.markdownService.updateMarkdown(body, identifier);
 
     console.log(body.visibility);
 
