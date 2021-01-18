@@ -10,4 +10,7 @@ export class MarkdownDTO {
     [MarkdownVisibility.PUBLIC]: MarkdownVisibility.PUBLIC,
   })
   visibility: MarkdownVisibility;
+
+  @IsString()
+  title?: string;
 }

@@ -19,6 +19,7 @@ export default class MarkdownService extends Service {
 
     if (!mds[0]) return false;
 
+    markdown.title && (mds[0].title = markdown.title);
     mds[0].content = markdown.content;
     mds[0].visibility = markdown.visibility || MarkdownVisibility.PRIVATE;
     mds[0].save();
@@ -45,17 +46,12 @@ export default class MarkdownService extends Service {
     };
 
     if (this.ctx.user?.userId) {
-      console.log(this.ctx.user.userId);
       //@ts-ignore
       findOptions.where[Op.or].push({ userId: this.ctx.user?.userModel.id });
     }
 
     const mds = await this.ctx.model.Markdown.findAll(findOptions);
 
-    // await mds.forEach((md) =>
-    //   //@ts-ignore
-    //   md.addCollaborator(13)
-    // );
     return mds;
   }
 

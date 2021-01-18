@@ -80,7 +80,11 @@ const EggShell = (app) => {
                     ctx.request.body
                   );
 
-                  const errors = validateSync(containerClass);
+                  const errors = validateSync(containerClass, {
+                    skipUndefinedProperties: true,
+                    skipNullProperties: true,
+                    skipMissingProperties: true,
+                  });
                   if (errors.length) {
                     throw new Error(errors);
                   }
