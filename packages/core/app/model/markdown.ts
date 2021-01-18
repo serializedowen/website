@@ -3,7 +3,7 @@ import { Application, IModel } from 'egg';
 import { ModelCtor, Model } from 'sequelize';
 
 const modelBuilder = (app: Application, model: IModel) => {
-  const { INTEGER, DATE, UUID, UUIDV4, STRING, ENUM } = app.Sequelize;
+  const { INTEGER, DATE, UUID, UUIDV4, STRING, ENUM, TEXT } = app.Sequelize;
 
   const Markdown = model.define('Markdown', {
     id: {
@@ -19,7 +19,7 @@ const modelBuilder = (app: Application, model: IModel) => {
     },
 
     content: {
-      type: STRING,
+      type: TEXT,
     },
 
     title: {
