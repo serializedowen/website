@@ -5,6 +5,7 @@ import {
   Post,
   Param,
   Body,
+  Delete,
 } from '@serializedowen/egg-shell-decorator';
 import Authenticated from 'app/decorators/Authenticated';
 import OpenAPI from 'app/decorators/OpenAPI';
@@ -46,5 +47,13 @@ export default class MarkdownController extends Controller {
     console.log(body.visibility);
 
     if (!flag) this.ctx.status = 500;
+  }
+
+  @Authenticated()
+  @Delete('/:identifier')
+  public async deleteMarkdown(@Param('identifier') identifier: string) {
+    const flag = await this.service.markdownService.deleteMarkdown(identifier);
+
+    if (!flag) this.ctx.status = 400;
   }
 }

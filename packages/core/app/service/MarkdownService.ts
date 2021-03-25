@@ -26,6 +26,26 @@ export default class MarkdownService extends Service {
     return true;
   }
 
+  public async deleteMarkdown(identifier: string) {
+    const md = await this.ctx.model.Markdown.findByPk(identifier, {
+      include: [
+        {
+          association: 'collaborators',
+          required: false,
+          attributes: ['id'],
+        },
+      ],
+    });
+
+    //@ts-ignore
+    if (md.userId !== this.ctx.user?.userId) {
+      return false;
+    }
+
+    md?.destroy();
+    return true;
+  }
+
   public async getVisibleMarkdowns() {
     const findOptions: FindOptions = {
       where: {
